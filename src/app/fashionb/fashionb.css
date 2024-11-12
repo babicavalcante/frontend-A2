@@ -1,0 +1,149 @@
+/* Reset e Estilo Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo da Página */
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Cabeçalho - Título Principal */
+.page-header {
+    text-align: center;
+    background-color: #f7c1d6; /* Cor rosa suave */
+    padding: 40px 0;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+/* Container Principal */
+.content-container {
+    margin-top: 40px;
+}
+
+/* Estilo para os Cards (Modelos e Designers) */
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    max-height: 250px;
+    object-fit: cover;
+}
+
+/* Estilo do Corpo do Card */
+.card-body {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Botão "Ver Mais" */
+.card-body .btn {
+    background-color: #e5a8b8;
+    color: white;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.card-body .btn:hover {
+    background-color: #d494a1; /* Cor de hover para o botão */
+}
+
+/* Carousel */
+.carousel-item img {
+    max-height: 500px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.carousel-caption h3,
+.carousel-caption p {
+    color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .page-header {
+        font-size: 1.8rem;
+        padding: 30px 0;
+    }
+
+    .content-container {
+        padding: 15px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    .card-body .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .carousel-caption h3 {
+        font-size: 1.5rem;
+    }
+
+    .carousel-caption p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-img-top {
+        height: 200px; /* Reduzir o tamanho das imagens nos celulares pequenos */
+    }
+
+    .carousel-caption h3 {
+        font-size: 1.2rem;
+    }
+
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+}

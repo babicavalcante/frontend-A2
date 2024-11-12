@@ -1,148 +1,85 @@
-/* Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Pagina.css */
 
-/* Corpo da página */
-body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: #f8f5f5; /* Fundo rosa claro */
-    color: #333; /* Texto escuro para contraste */
-    line-height: 1.6;
-}
-
-/* Navbar */
-.navbar {
+/* Navbar customizada */
+.navbar-custom {
     background-color: #f7c1d6; /* Rosa bebê */
-    border-bottom: 2px solid #e5a8b8; /* Borda suave em tom de rosa mais forte */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-}
-
-.navbar-brand {
+    border-bottom: 2px solid #e5a8b8;
+  }
+  
+  .navbar-logo {
     font-family: 'Helvetica', sans-serif;
     font-size: 2rem;
     color: #333;
     font-weight: 700;
     letter-spacing: 1px;
-}
-
-.navbar-brand:hover {
-    color: #e5a8b8; /* Cor de hover em rosa mais forte */
-}
-
-.navbar .navbar-nav .nav-link {
-    color: #333;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-transform: uppercase; /* Letra maiúscula para sofisticação */
-}
-
-.navbar .navbar-nav .nav-link:hover {
-    color: #e5a8b8; /* Hover em rosa mais forte */
-}
-
-.nav-dropdown-item {
-    color: #333;
-    text-transform: uppercase;
-}
-
-.nav-dropdown-item:hover {
-    color: #e5a8b8; /* Hover suave em rosa */
-}
-
-/* Cabeçalho da página */
-.text-center {
-    background-color: #f7c1d6; /* Fundo rosa bebê */
-    padding: 40px 0;
-    color: #fff;
-}
-
-.text-center h1 {
-    font-family: 'Helvetica', sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-/* Container principal */
-.container {
-    margin-top: 40px;
-    padding: 20px;
-    max-width: 1200px;
-}
-
-/* Tabelas */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-}
-
-th, td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #e5a8b8; /* Borda suave rosa */
-}
-
-th {
-    background-color: #fbe8ef; /* Fundo rosa bem suave */
-    font-weight: 700;
-    color: #333;
-}
-
-td {
-    background-color: #ffffff;
-}
-
-tr:hover td {
-    background-color: #f9e1e7; /* Efeito de hover suave com rosa clarinho */
-}
-
-/* Botões */
-.btn {
-    background-color: #f7c1d6; /* Fundo rosa bebê */
-    color: #fff;
+  }
+  
+  .navbar-brand:hover {
+    color: #e5a8b8;
+  }
+  
+  .search-form {
+    margin-left: auto;
+  }
+  
+  .search-input {
+    border-radius: 20px;
     padding: 10px 20px;
-    font-size: 1.1rem;
-    border-radius: 4px;
+  }
+  
+  .search-button {
+    border-radius: 20px;
+  }
+  
+  .page-header {
+    text-align: center;
+    background-color: #f7c1d6;
+    padding: 20px;
+  }
+  
+  .content-container {
+    margin-top: 20px;
+  }
+  
+  /* Cards */
+  .card {
     border: none;
-    text-transform: uppercase;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #e5a8b8; /* Hover em rosa mais forte */
-}
-
-/* Ícones */
-i {
-    font-size: 1.2rem;
-}
-
-/* Imagens */
-img {
-    max-width: 100%;
-    border-radius: 5px;
-}
-
-/* Ajustes para a responsividade */
-@media (max-width: 768px) {
-    .navbar-brand {
-        font-size: 1.6rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    background-color: #fff;
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Estilos de Responsividade */
+  @media (max-width: 768px) {
+    .navbar-logo {
+      font-size: 1.5rem;
     }
-
-    .text-center h1 {
-        font-size: 2rem;
+  
+    .page-header h1 {
+      font-size: 2rem;
     }
-
-    .container {
-        padding: 15px;
+  
+    .content-container {
+      padding: 10px;
     }
-
-    .btn {
-        font-size: 1rem;
+  
+    .card-body {
+      padding: 10px;
     }
-}
+  }
+  
