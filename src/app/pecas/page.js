@@ -1,8 +1,8 @@
 'use client'
 
-import Link from "next/link"
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap"
+import { Table } from "react-bootstrap";
 import { FaPlusCircle } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -11,17 +11,17 @@ import Pagina from "../components/Pagina/Pagina";
 
 export default function Page() {
 
-    const [pecas, setPecas] = useState([])
+    const [pecas, setPecas] = useState([]);
 
     useEffect(() => {
-        setPecas(JSON.parse(localStorage.getItem('pecas')) || [])
-    }, [])
+        setPecas(JSON.parse(localStorage.getItem('pecas')) || []);
+    }, []);
 
     function excluir(id) {
         if (confirm('Deseja realmente excluir a peça?')) {
-            const dados = pecas.filter(item => item.id !== id)
-            localStorage.setItem('pecas', JSON.stringify(dados))
-            setPecas(dados)
+            const dados = pecas.filter(item => item.id !== id);
+            localStorage.setItem('pecas', JSON.stringify(dados));
+            setPecas(dados);
         }
     }
 
@@ -48,7 +48,7 @@ export default function Page() {
                     </tr>
                 </thead>
                 <tbody>
-                    {pecas.map((item, i) => (
+                    {pecas.map((item) => (
                         <tr key={item.id}>
                             <td>
                                 <Link href={`/pecas/form/${item.id}`}>
@@ -65,11 +65,11 @@ export default function Page() {
                             <td>{item.categoria}</td>
                             <td>{item.tamanho}</td>
                             <td>{item.cor}</td>
-                            <td>{item.preco}</td>
+                            <td>{`R$ ${item.preco.toFixed(2).replace('.', ',')}`}</td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
         </Pagina>
-    )
+    );
 }
