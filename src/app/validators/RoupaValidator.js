@@ -11,17 +11,12 @@ const RoupaValidator = Yup.object().shape({
 
     categoria: Yup.string()
         .required('Categoria é obrigatória'),
-
-    tamanho: Yup.string()
-        .oneOf(['PP', 'P', 'M', 'G', 'GG'], 'Tamanho inválido'),
-
     cor: Yup.string()
         .required('Cor é obrigatória')
         .min(3, 'Cor deve ter no mínimo 3 caracteres'),
 
     preco: Yup.number()
         .required('Preço é obrigatório')
-        .positive('Preço deve ser um valor positivo')
 });
 
 export default RoupaValidator;

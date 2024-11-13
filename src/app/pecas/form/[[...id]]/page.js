@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Pagina from "@/app/components/Pagina/Pagina";
 import RoupaValidator from "@/app/validators/RoupaValidator"; // Importa o validador de roupas
@@ -25,6 +25,13 @@ export default function Page() {
         preco: ''
     });
     const [marcas, setMarcas] = useState([]); // Estado para armazenar as marcas
+
+    // Lista de categorias
+    const categorias = ["Roupas", "Sapatos", "Acessórios"];
+    
+    // Tamanhos de roupas e numeração de sapato
+    const tamanhosRoupas = ["PP","P", "M", "G", "GG"];
+    const numeracaoSapatos = ["33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43"];
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -56,6 +63,14 @@ export default function Page() {
         return route.push('/pecas'); // Redireciona para a página de peças após salvar
     }
 
+    // Função para formatar o preço
+    const formatarPreco = (preco) => {
+        return preco
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ".") // Adiciona pontos a cada 3 dígitos
+            .replace(",", "."); // Garante a vírgula como separador de decimal
+    };
+
     return (
         <Pagina titulo="Peças de Roupa">
 
@@ -73,8 +88,8 @@ export default function Page() {
                     setFieldValue,
                 }) => {
 
+                    // Formatação do valor de preço no campo
                     useEffect(() => {
-                        // Verifica se "preco" é um número, se for, converte para string
                         if (typeof values.preco === 'number') {
                             const precoNumerico = values.preco.toString();
                             setFieldValue('preco', precoNumerico ? parseFloat(precoNumerico.replace(/[^\d.-]/g, '')) : '');
@@ -83,6 +98,8 @@ export default function Page() {
 
                     return (
                         <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }}>
+
+                            {/* Campo Nome */}
                             <Form.Group className="mb-3" controlId="nome">
                                 <Form.Label>Nome</Form.Label>
                                 <Form.Control
@@ -98,6 +115,7 @@ export default function Page() {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Marca */}
                             <Form.Group className="mb-3" controlId="marcas">
                                 <Form.Label>Marca</Form.Label>
                                 <Form.Select
@@ -116,36 +134,52 @@ export default function Page() {
                                 <div className="text-danger">{errors.marcas}</div>
                             </Form.Group>
 
+                            {/* Categoria */}
                             <Form.Group className="mb-3" controlId="categoria">
                                 <Form.Label>Categoria</Form.Label>
-                                <Form.Control
-                                    type="text"
+                                <Form.Select
                                     name="categoria"
                                     value={values.categoria}
                                     onChange={handleChange}
                                     isInvalid={errors.categoria}
-                                    style={{ borderColor: errors.categoria ? '#dc3545' : '#ced4da' }}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.categoria}
-                                </Form.Control.Feedback>
+                                >
+                                    <option value="">Selecione a categoria</option>
+                                    {categorias.map((categoria, index) => (
+                                        <option key={index} value={categoria}>
+                                            {categoria}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                                <div className="text-danger">{errors.categoria}</div>
                             </Form.Group>
 
+                            {/* Tamanho */}
                             <Form.Group className="mb-3" controlId="tamanho">
                                 <Form.Label>Tamanho</Form.Label>
-                                <Form.Control
-                                    type="text"
+                                <Form.Select
                                     name="tamanho"
                                     value={values.tamanho}
                                     onChange={handleChange}
                                     isInvalid={errors.tamanho}
-                                    style={{ borderColor: errors.tamanho ? '#dc3545' : '#ced4da' }}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.tamanho}
-                                </Form.Control.Feedback>
+                                >
+                                    <option value="">Selecione o tamanho</option>
+                                    {values.categoria === "Roupas" &&
+                                        tamanhosRoupas.map((tamanho, index) => (
+                                            <option key={index} value={tamanho}>
+                                                {tamanho}
+                                            </option>
+                                        ))}
+                                    {values.categoria === "Sapatos" &&
+                                        numeracaoSapatos.map((numero, index) => (
+                                            <option key={index} value={numero}>
+                                                {numero}
+                                            </option>
+                                        ))}
+                                </Form.Select>
+                                <div className="text-danger">{errors.tamanho}</div>
                             </Form.Group>
 
+                            {/* Cor */}
                             <Form.Group className="mb-3" controlId="cor">
                                 <Form.Label>Cor</Form.Label>
                                 <Form.Control
@@ -161,25 +195,26 @@ export default function Page() {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Preço */}
                             <Form.Group className="mb-3" controlId="preco">
                                 <Form.Label>Preço</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="preco"
-                                    value={values.preco ? `R$ ${values.preco.toFixed(2).replace('.', ',')}` : ''}
+                                    value={values.preco ? `R$ ${formatarPreco(values.preco)}` : ''}
                                     onChange={e => {
-                                        // Remove "R$" e formata para número
-                                        const rawValue = e.target.value.replace(/[^\d]/g, '');
-                                        const numericValue = rawValue ? parseFloat(rawValue) / 100 : 0; // Convertendo para número
-                                        setFieldValue('preco', numericValue); // Atualiza o valor numérico
+                                        const rawValue = e.target.value.replace(/[^\d]/g, ''); // Remove não números
+                                        const numericValue = rawValue ? parseFloat(rawValue) / 100 : 0;
+                                        setFieldValue('preco', numericValue);
                                     }}
                                     isInvalid={errors.preco}
                                 />
                                 <div className="text-danger">{errors.preco}</div>
                             </Form.Group>
 
+                            {/* Foto (URL) */}
                             <Form.Group className="mb-3" controlId="foto">
-                                <Form.Label>Foto(URL)</Form.Label>
+                                <Form.Label>Foto (URL)</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="foto"
@@ -191,6 +226,7 @@ export default function Page() {
                                 <div className="text-danger">{errors.foto}</div>
                             </Form.Group>
 
+                            {/* Botões */}
                             <div className="text-center">
                                 <Button onClick={handleSubmit} variant="success" className="me-2">
                                     <FaCheck /> Salvar
