@@ -1,11 +1,10 @@
-'use client'
+'use client';
 
 import { Container, Nav, NavDropdown, Navbar, Form, FormControl, Button } from "react-bootstrap";
 import { FaSearch, FaUser, FaShoppingCart, FaHeart } from "react-icons/fa";
-import Link from "next/link";
+import Link from "next/link"; // Importando o Link do Next.js
 import './Pagina.css'; // Certifique-se de que seu CSS está sendo carregado corretamente.
 import Footer from "../Footer/Footer";
-
 
 export default function Pagina(props) {
     return (
@@ -44,13 +43,11 @@ export default function Pagina(props) {
 
                         {/* Ícones de Navegação (Login, Carrinho, Favoritos) */}
                         <Nav>
-                            <Nav.Link href="/login">
+                            {/* Redirecionamento para Login */}
+                            <Nav.Link as={Link} href="/login"> 
                                 <FaUser className="nav-icon" />
                             </Nav.Link>
-                            <Nav.Link href="/cart">
-                                <FaShoppingCart className="nav-icon" />
-                            </Nav.Link>
-                            <Nav.Link href="/favorites">
+                            <Nav.Link href="/favoritos">
                                 <FaHeart className="nav-icon" />
                             </Nav.Link>
                         </Nav>

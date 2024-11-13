@@ -1,16 +1,14 @@
-'use client'
+'use client';
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
 import { FaPlusCircle } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Pagina from "../components/Pagina/Pagina";
-
+import './modelos.css'; // Importando o CSS
 
 export default function Page() {
-
     const [modelos, setModelos] = useState([]);
 
     useEffect(() => {
@@ -27,53 +25,41 @@ export default function Page() {
 
     return (
         <Pagina titulo="Modelos">
+            <div className="page-container">
+                <Link href="/modelos/form" className="btn btn-primary mb-3">
+                    <FaPlusCircle /> Novo Modelo
+                </Link>
 
-            <Link
-                href="/modelos/form"
-                className="btn btn-primary mb-3"
-            >
-                <FaPlusCircle /> Novo
-            </Link>
+                <div className="card-container">
+                    {modelos.length === 0 ? (
+                        <p>Nenhum modelo cadastrado.</p>
+                    ) : (
+                        modelos.map((item) => (
+                            <div key={item.id} className="card">
+                                <img src={item.foto} alt={`${item.nome} foto`} className="card-img" />
+                                <h3>{item.nome}</h3>
+                                <p><strong>Data de Nascimento:</strong> {item.data}</p>
+                                <p><strong>Altura:</strong> {item.altura} cm</p>
+                                <p><strong>Telefone:</strong> {item.telefone}</p>
+                                <p><strong>Email:</strong> {item.email}</p>
+                                <p><strong>Peça de Roupa:</strong> {item.peca}</p>
 
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nome</th>
-                        <th>Dt. Nascimento</th>
-                        <th>Altura</th>
-                        <th>Telefone</th>
-                        <th>Email</th>
-                        <th>Peça de roupa</th>
-                        <th>Foto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {modelos.map((item, i) => (
-                        <tr key={item.id}>
-                            <td>
-                                <Link href={`/modelos/form/${item.id}`}>
-                                    <FaRegEdit title="Editar" className="text-primary" />
-                                </Link>
-                                <MdDelete
-                                    title="Excluir"
-                                    className="text-danger"
-                                    onClick={() => excluir(item.id)}
-                                />
-                            </td>
-                            <td>{item.nome}</td>
-                            <td>{item.data}</td>
-                            <td>{item.altura}</td>
-                            <td>{item.telefone}</td>
-                            <td>{item.email}</td>
-                            <td>{item.peca}</td>
-                            <td>
-                                <img src={item.foto} alt={`${item.nome} foto`} width={100} />
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+                                <div className="actions">
+                                    <Link href={`/modelos/form/${item.id}`}>
+                                        <FaRegEdit title="Editar" />
+                                    </Link>
+                                    <button
+                                        onClick={() => excluir(item.id)}
+                                        title="Excluir"
+                                    >
+                                        <MdDelete />
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
         </Pagina>
     );
 }

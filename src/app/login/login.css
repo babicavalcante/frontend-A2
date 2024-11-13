@@ -1,0 +1,68 @@
+/* login.css */
+
+body {
+    background-color: #fce4ec; /* Rosa bebê */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .login-box h2 {
+    color: #d81b60; /* Rosa forte */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-control {
+    border-radius: 4px;
+    border: 1px solid #e1bee7;
+  }
+  
+  .form-control:focus {
+    border-color: #f06292;
+    box-shadow: 0 0 5px rgba(240, 98, 146, 0.5);
+  }
+  
+  .recaptcha-container {
+    margin: 20px 0;
+  }
+  
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  
+  .btn-primary {
+    background-color: #f06292;
+    border-color: #f06292;
+  }
+  
+  .btn-primary:hover {
+    background-color: #e91e63;
+    border-color: #e91e63;
+  }
+  
+  .text-muted {
+    color: #d81b60;
+    text-decoration: none;
+  }
+  
+  .text-muted:hover {
+    text-decoration: underline;
+  }
+  

@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
 
 import Pagina from "@/app/components/Pagina/Pagina";
 import ModeloValidator from "@/app/validators/ModeloValidator";
 import { Formik } from "formik";
 import Link from "next/link";
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FaCheck } from "react-icons/fa";
@@ -13,58 +13,42 @@ import { MdOutlineArrowBack } from "react-icons/md";
 import { mask } from "remask";
 import { v4 } from "uuid";
 
-export default function Page() {
+export default function Page({ params }) {
     const route = useRouter();
-    const params = useParams(); // Descompacta params usando useParams()
 
-    const [modelo, setModelo] = useState({
-        nome: '', 
-        data: '', 
-        altura: '', 
-        telefone: '', 
-        email: '', 
-        peca: '', 
-        foto: ''
-    });
+    const modelos = JSON.parse(localStorage.getItem('modelos')) || [];
+    const dados = modelos.find(item => item.id == params.id);
+    const modelo = dados || { nome: '', data: '', altura: '', telefone: '', email: '', peca: '', foto: '' };
 
     const [pecas, setPecas] = useState([]);
 
+    // Carregar as peças para o seletor de peças de roupa
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const modelos = JSON.parse(localStorage.getItem('modelos')) || [];
-            const dados = modelos.find(item => item.id == params.id);
-            setModelo(dados || { nome: '', data: '', altura: '', telefone: '', email: '', peca: '', foto: '' });
-            setPecas(JSON.parse(localStorage.getItem('pecas')) || []);
-        }
-    }, [params.id]);
+        setPecas(JSON.parse(localStorage.getItem('pecas')) || []);
+    }, []);
 
-    // Função para salvar as alterações feitas no modelo
+    // Função para salvar o modelo
     function salvar(dados) {
-        const modelos = JSON.parse(localStorage.getItem('modelos')) || [];
-
         if (modelo.id) {
-            // Encontrando o índice do modelo para atualizar
-            const index = modelos.findIndex(item => item.id === modelo.id);
-            if (index !== -1) {
-                modelos[index] = { ...modelos[index], ...dados }; // Atualiza o modelo no array
-            }
+            // Atualiza o modelo existente
+            Object.assign(modelo, dados);
         } else {
-            dados.id = v4(); // Se for novo modelo, gera um ID
+            // Cria um novo modelo
+            dados.id = v4();
             modelos.push(dados);
         }
 
+        // Atualiza o localStorage com os modelos
         localStorage.setItem('modelos', JSON.stringify(modelos));
-        return route.push('/modelos'); // Redireciona para a página de modelos após salvar
+        return route.push('/modelos'); // Redireciona para a página de modelos
     }
 
     return (
         <Pagina titulo="Modelos">
-
             <Formik
                 initialValues={modelo}
-                enableReinitialize
                 validationSchema={ModeloValidator}
-                onSubmit={values => salvar(values)} // Chama a função de salvar
+                onSubmit={values => salvar(values)}
             >
                 {({
                     values,
@@ -74,12 +58,13 @@ export default function Page() {
                     setFieldValue,
                 }) => {
 
+                    // Mascara para o campo de telefone
                     useEffect(() => {
                         setFieldValue('telefone', mask(values.telefone, '(99) 99999-9999'));
                     }, [values.telefone]);
 
                     return (
-                        <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }}>
+                        <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }} onSubmit={handleSubmit}>
                             <Form.Group className="mb-3" controlId="nome">
                                 <Form.Label>Nome Completo</Form.Label>
                                 <Form.Control
@@ -131,13 +116,11 @@ export default function Page() {
                                     type="text"
                                     name="telefone"
                                     value={values.telefone}
-                                    onChange={(value) => {
-                                        setFieldValue('telefone', mask(value.target.value, '(99) 99999-9999'))
-                                    }}
+                                    onChange={(e) => setFieldValue('telefone', mask(e.target.value, '(99) 99999-9999'))}
                                     isInvalid={errors.telefone}
                                     style={{ borderColor: errors.telefone ? '#dc3545' : '#ced4da' }}
                                 />
-                                <div className="text-danger">{errors.telefone}</div>
+                                <Form.Control.Feedback type="invalid">{errors.telefone}</Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="email">
@@ -150,29 +133,29 @@ export default function Page() {
                                     isInvalid={errors.email}
                                     style={{ borderColor: errors.email ? '#dc3545' : '#ced4da' }}
                                 />
-                                <div className="text-danger">{errors.email}</div>
+                                <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="peca">
-                                <Form.Label>Peça de roupa</Form.Label>
+                                <Form.Label>Peça de Roupa</Form.Label>
                                 <Form.Select
                                     name="peca"
                                     value={values.peca}
                                     onChange={handleChange}
                                     isInvalid={errors.peca}
                                 >
-                                    <option value=''>Selecione</option>
+                                    <option value="">Selecione</option>
                                     {pecas.map(item => (
                                         <option key={item.nome} value={item.nome}>
                                             {item.nome}
                                         </option>
                                     ))}
                                 </Form.Select>
-                                <div className="text-danger">{errors.peca}</div>
+                                <Form.Control.Feedback type="invalid">{errors.peca}</Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="foto">
-                                <Form.Label>Foto</Form.Label>
+                                <Form.Label>Foto (URL)</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="foto"
@@ -181,22 +164,19 @@ export default function Page() {
                                     isInvalid={errors.foto}
                                     style={{ borderColor: errors.foto ? '#dc3545' : '#ced4da' }}
                                 />
-                                <div className="text-danger">{errors.foto}</div>
+                                <Form.Control.Feedback type="invalid">{errors.foto}</Form.Control.Feedback>
                             </Form.Group>
 
                             <div className="text-center">
-                                <Button onClick={handleSubmit} variant="primary" className="me-2">
+                                <Button type="submit" variant="primary" className="me-2">
                                     <FaCheck /> Salvar
                                 </Button>
-                                <Link
-                                    href="/modelos"
-                                    className="btn btn-secondary"
-                                >
+                                <Link href="/modelos" className="btn btn-secondary">
                                     <MdOutlineArrowBack /> Voltar
                                 </Link>
                             </div>
                         </Form>
-                    )
+                    );
                 }}
             </Formik>
         </Pagina>
