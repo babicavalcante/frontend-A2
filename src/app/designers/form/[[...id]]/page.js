@@ -124,6 +124,19 @@ export default function Page() {
                                 <div className="text-danger">{errors.telefone}</div>
                             </Form.Group>
 
+                            <Form.Group className="mb-3" controlId="foto">
+                                <Form.Label>Foto(URL)</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="foto"
+                                    value={values.foto}
+                                    onChange={handleChange}
+                                    isInvalid={errors.foto}
+                                    style={{ borderColor: errors.foto ? '#dc3545' : '#ced4da' }}
+                                />
+                                <div className="text-danger">{errors.foto}</div>
+                            </Form.Group>
+
                             <div className="text-center">
                                 <Button onClick={handleSubmit} variant="primary" className="me-2">
                                     <FaCheck /> Salvar

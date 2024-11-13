@@ -154,8 +154,21 @@ export default function Page({ params }) {
                                     isInvalid={errors.data}
                                 />
                                 <div className="text-danger">{errors.data}</div>
-                                <Form.Control.Feedback type="invalid">{errors.data}</Form.Control.Feedback>
                             </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="cartaz">
+                                <Form.Label>Cartaz (URL)</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="cartaz"
+                                    value={values.cartaz}
+                                    onChange={handleChange}
+                                    isInvalid={errors.cartaz}
+                                    style={{ borderColor: errors.cartaz ? '#dc3545' : '#ced4da' }}
+                                />
+                                <div className="text-danger">{errors.cartaz}</div>
+                            </Form.Group> 
+
                             <div className="text-center">
                                 <Button onClick={handleSubmit} variant="success">
                                     <FaCheck /> Salvar

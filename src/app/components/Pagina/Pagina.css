@@ -2,84 +2,61 @@
 
 /* Navbar customizada */
 .navbar-custom {
-    background-color: #f7c1d6; /* Rosa bebê */
-    border-bottom: 2px solid #e5a8b8;
-  }
-  
+  background-color: #f7c1d6 !important; /* Rosa bebê */
+  border-bottom: 2px solid #e5a8b8 !important;
+}
+
+.navbar-logo {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 2rem;
+  color: #333;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.navbar-brand:hover {
+  color: #e5a8b8;
+}
+
+.search-form {
+  margin-left: auto;
+}
+
+.search-input {
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.search-button {
+  border-radius: 20px;
+}
+
+/* Página header */
+.page-header {
+  text-align: center;
+  background-color: #f7c1d6;
+  padding: 20px;
+}
+
+.content-container {
+  margin-top: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
   .navbar-logo {
-    font-family: 'Helvetica', sans-serif;
-    font-size: 2rem;
-    color: #333;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-  
-  .navbar-brand:hover {
-    color: #e5a8b8;
-  }
-  
-  .search-form {
-    margin-left: auto;
-  }
-  
-  .search-input {
-    border-radius: 20px;
-    padding: 10px 20px;
-  }
-  
-  .search-button {
-    border-radius: 20px;
-  }
-  
-  .page-header {
-    text-align: center;
-    background-color: #f7c1d6;
-    padding: 20px;
-  }
-  
-  .content-container {
-    margin-top: 20px;
-  }
-  
-  /* Cards */
-  .card {
-    border: none;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-body {
-    background-color: #fff;
-    padding: 15px;
-  }
-  
-  .card-title {
     font-size: 1.5rem;
-    font-weight: 700;
   }
-  
-  .card-text {
-    font-size: 1rem;
-    color: #555;
+
+  .page-header h1 {
+    font-size: 2rem;
   }
-  
-  /* Estilos de Responsividade */
-  @media (max-width: 768px) {
-    .navbar-logo {
-      font-size: 1.5rem;
-    }
-  
-    .page-header h1 {
-      font-size: 2rem;
-    }
-  
-    .content-container {
-      padding: 10px;
-    }
-  
-    .card-body {
-      padding: 10px;
-    }
+
+  .content-container {
+    padding: 10px;
   }
-  
+
+  .card-body {
+    padding: 10px;
+  }
+}

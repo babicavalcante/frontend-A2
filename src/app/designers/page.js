@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
 import { FaPlusCircle } from "react-icons/fa";
-import { FaRegEdit } from "react-icons/fa"; 
-import { MdDelete } from "react-icons/md"; 
+import { FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import Pagina from "../components/Pagina/Pagina";
+import './designers.css'; // Importando o CSS para designers
 
 export default function Page() {
-    
     const [designers, setDesigners] = useState([]);
 
     useEffect(() => {
@@ -26,44 +25,39 @@ export default function Page() {
 
     return (
         <Pagina titulo="Designers">
-            <Link
-                href="/designers/form"
-                className="btn btn-primary mb-3"
-            >
-                <FaPlusCircle /> Novo
-            </Link>
+            <div className="page-container">
+                <Link href="/designers/form" className="btn btn-primary mb-3">
+                    <FaPlusCircle /> Novo Designer
+                </Link>
 
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nome Completo</th>
-                        <th>Especialidade</th>
-                        <th>Email</th>
-                        <th>Telefone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {designers.map((item, i) => (
-                        <tr key={item.id}>
-                            <td>
-                                <Link href={`/designers/form/${item.id}`}>
-                                    <FaRegEdit title="Editar" className="text-primary" />
-                                </Link>
-                                <MdDelete
-                                    title="Excluir"
-                                    className="text-danger"
-                                    onClick={() => excluir(item.id)}
-                                />
-                            </td>
-                            <td>{item.nome}</td>
-                            <td>{item.especialidade}</td>
-                            <td>{item.email}</td>
-                            <td>{item.telefone}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+                <div className="card-container">
+                    {designers.length === 0 ? (
+                        <p>Nenhum designer cadastrado.</p>
+                    ) : (
+                        designers.map((item) => (
+                            <div key={item.id} className="card">
+                                <img src={item.foto} alt={`${item.nome} foto`} />
+                                <h3>{item.nome}</h3>
+                                <p><strong>Especialidade:</strong> {item.especialidade}</p>
+                                <p><strong>Email:</strong> {item.email}</p>
+                                <p><strong>Telefone:</strong> {item.telefone}</p>
+
+                                <div className="actions">
+                                    <Link href={`/designers/form/${item.id}`}>
+                                        <FaRegEdit title="Editar" />
+                                    </Link>
+                                    <button
+                                        onClick={() => excluir(item.id)}
+                                        title="Excluir"
+                                    >
+                                        <MdDelete />
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
         </Pagina>
     );
 }

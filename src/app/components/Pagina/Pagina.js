@@ -4,6 +4,8 @@ import { Container, Nav, NavDropdown, Navbar, Form, FormControl, Button } from "
 import { FaSearch, FaUser, FaShoppingCart, FaHeart } from "react-icons/fa";
 import Link from "next/link";
 import './Pagina.css'; // Certifique-se de que seu CSS está sendo carregado corretamente.
+import Footer from "../Footer/Footer";
+
 
 export default function Pagina(props) {
     return (
@@ -65,6 +67,9 @@ export default function Pagina(props) {
             <Container className="content-container">
                 {props.children}
             </Container>
+
+            {/* Incluindo o Footer ao final da página */}
+            <Footer />
         </>
     );
 }

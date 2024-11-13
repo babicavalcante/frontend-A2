@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 
 import Pagina from "@/app/components/Pagina/Pagina";
 import MarcaValidator from "@/app/validators/MarcaValidator";
@@ -48,7 +47,6 @@ export default function Page() {
 
     return (
         <Pagina titulo="Marcas">
-
             <Formik
                 initialValues={marca} // Passa os dados da marca para o Formik
                 validationSchema={MarcaValidator}

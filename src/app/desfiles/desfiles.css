@@ -1,0 +1,86 @@
+/* desfiles.css */
+
+/* Container da página */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+/* Container de cards */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Estilo dos cards */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.card p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Estilo das ações de editar e excluir */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.actions a, .actions button {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Botão de "Novo" */
+.page-container .btn-primary {
+    background-color: #dbadbe;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.actions button {
+    color: #0056b3;
+}
+
+/* Efeitos ao passar o mouse */
+.actions a:hover, .actions button:hover {
+    color: #0056b3;
+}
+
+.actions button:hover {
+    color: #0056b3;
+}

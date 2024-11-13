@@ -1,16 +1,14 @@
-'use client'
+'use client';
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
 import { FaPlusCircle } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Pagina from "../components/Pagina/Pagina";
-
+import './pecas.css'; // Importando o CSS
 
 export default function Page() {
-
     const [pecas, setPecas] = useState([]);
 
     useEffect(() => {
@@ -27,49 +25,41 @@ export default function Page() {
 
     return (
         <Pagina titulo="Peças de Roupa">
+            <div className="page-container">
+                <Link href="/pecas/form" className="btn btn-primary mb-3">
+                    <FaPlusCircle /> Nova Peça
+                </Link>
 
-            <Link
-                href="/pecas/form"
-                className="btn btn-primary mb-3"
-            >
-                <FaPlusCircle /> Nova Peça
-            </Link>
+                <div className="card-container">
+                    {pecas.length === 0 ? (
+                        <p>Nenhuma peça cadastrada.</p>
+                    ) : (
+                        pecas.map((item) => (
+                            <div key={item.id} className="card">
+                                <img src={item.foto} alt={`${item.nome} foto`} className="card-img" />
+                                <h3>{item.nome}</h3>
+                                <p><strong>Marca:</strong> {item.marcas}</p>
+                                <p><strong>Categoria:</strong> {item.categoria}</p>
+                                <p><strong>Tamanho:</strong> {item.tamanho}</p>
+                                <p><strong>Cor:</strong> {item.cor}</p>
+                                <p><strong>Preço:</strong> R$ {item.preco.toFixed(2).replace('.', ',')}</p>
 
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nome</th>
-                        <th>Marca</th>
-                        <th>Categoria</th>
-                        <th>Tamanho</th>
-                        <th>Cor</th>
-                        <th>Preço</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pecas.map((item) => (
-                        <tr key={item.id}>
-                            <td>
-                                <Link href={`/pecas/form/${item.id}`}>
-                                    <FaRegEdit title="Editar" className="text-primary" />
-                                </Link>
-                                <MdDelete
-                                    title="Excluir"
-                                    className="text-danger"
-                                    onClick={() => excluir(item.id)}
-                                />
-                            </td>
-                            <td>{item.nome}</td>
-                            <td>{item.marcas}</td>
-                            <td>{item.categoria}</td>
-                            <td>{item.tamanho}</td>
-                            <td>{item.cor}</td>
-                            <td>{`R$ ${item.preco.toFixed(2).replace('.', ',')}`}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+                                <div className="actions">
+                                    <Link href={`/pecas/form/${item.id}`}>
+                                        <FaRegEdit title="Editar" />
+                                    </Link>
+                                    <button
+                                        onClick={() => excluir(item.id)}
+                                        title="Excluir"
+                                    >
+                                        <MdDelete />
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
         </Pagina>
     );
 }

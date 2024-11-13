@@ -1,17 +1,14 @@
-'use client'
+'use client';
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
 import { FaPlusCircle } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa"; 
 import { MdDelete } from "react-icons/md"; 
 import Pagina from "../components/Pagina/Pagina";
-
-
+import './desfiles.css'; // Importando o CSS
 
 export default function Page() {
-    
     const [desfiles, setDesfiles] = useState([]);
 
     useEffect(() => {
@@ -28,48 +25,41 @@ export default function Page() {
 
     return (
         <Pagina titulo="Desfiles">
-            <Link
-                href="/desfiles/form"
-                className="btn btn-primary mb-3"
-            >
-                <FaPlusCircle /> Novo
-            </Link>
+            <div className="page-container">
+                <Link href="/desfiles/form" className="btn btn-primary mb-3">
+                    <FaPlusCircle /> Novo Desfile
+                </Link>
 
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nome</th>
-                        <th>Marca</th>
-                        <th>Designer</th>
-                        <th>Modelo</th>
-                        <th>Horário</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {desfiles.map((item, i) => (
-                        <tr key={item.id}>
-                            <td>
-                                <Link href={`/desfiles/form/${item.id}`}>
-                                    <FaRegEdit title="Editar" className="text-primary" />
-                                </Link>
-                                <MdDelete
-                                    title="Excluir"
-                                    className="text-danger"
-                                    onClick={() => excluir(item.id)}
-                                />
-                            </td>
-                            <td>{item.nome}</td>
-                            <td>{item.marca}</td>
-                            <td>{item.designer}</td>
-                            <td>{item.modelo}</td>
-                            <td>{item.horario}</td>
-                            <td>{item.data}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+                <div className="card-container">
+                    {desfiles.length === 0 ? (
+                        <p>Nenhum desfile cadastrado.</p>
+                    ) : (
+                        desfiles.map((item) => (
+                            <div key={item.id} className="card">
+                                <img src={item.cartaz} alt={`${item.nome} cartaz`} className="card-img" />
+                                <h3>{item.nome}</h3>
+                                <p><strong>Marca:</strong> {item.marca}</p>
+                                <p><strong>Designer:</strong> {item.designer}</p>
+                                <p><strong>Modelo:</strong> {item.modelo}</p>
+                                <p><strong>Horário:</strong> {item.horario}</p>
+                                <p><strong>Data:</strong> {item.data}</p>
+
+                                <div className="actions">
+                                    <Link href={`/desfiles/form/${item.id}`}>
+                                        <FaRegEdit title="Editar" />
+                                    </Link>
+                                    <button
+                                        onClick={() => excluir(item.id)}
+                                        title="Excluir"
+                                    >
+                                        <MdDelete />
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
         </Pagina>
     );
 }
