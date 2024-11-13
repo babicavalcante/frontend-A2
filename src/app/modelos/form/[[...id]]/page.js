@@ -1,6 +1,5 @@
 'use client';
 
-
 import Pagina from "@/app/components/Pagina/Pagina";
 import ModeloValidator from "@/app/validators/ModeloValidator";
 import { Formik } from "formik";
@@ -16,31 +15,40 @@ import { v4 } from "uuid";
 export default function Page({ params }) {
     const route = useRouter();
 
-    const modelos = JSON.parse(localStorage.getItem('modelos')) || [];
+    const [modelos, setModelos] = useState([]); // Adicionando estado para modelos
+    const [pecas, setPecas] = useState([]);
+
     const dados = modelos.find(item => item.id == params.id);
     const modelo = dados || { nome: '', data: '', altura: '', telefone: '', email: '', peca: '', foto: '' };
 
-    const [pecas, setPecas] = useState([]);
-
-    // Carregar as peças para o seletor de peças de roupa
+    // Carregar os modelos e peças para o seletor
     useEffect(() => {
+        const storedModelos = JSON.parse(localStorage.getItem('modelos')) || [];
+        setModelos(storedModelos);
         setPecas(JSON.parse(localStorage.getItem('pecas')) || []);
     }, []);
 
-    // Função para salvar o modelo
+    // Função para salvar ou atualizar o modelo
     function salvar(dados) {
+        const updatedModelos = [...modelos];
         if (modelo.id) {
             // Atualiza o modelo existente
-            Object.assign(modelo, dados);
+            const index = updatedModelos.findIndex(item => item.id === modelo.id);
+            if (index !== -1) {
+                updatedModelos[index] = { ...updatedModelos[index], ...dados };
+            }
         } else {
             // Cria um novo modelo
-            dados.id = v4();
-            modelos.push(dados);
+            dados.id = v4(); // Gerar um ID único para o novo modelo
+            updatedModelos.push(dados);
         }
 
-        // Atualiza o localStorage com os modelos
-        localStorage.setItem('modelos', JSON.stringify(modelos));
-        return route.push('/modelos'); // Redireciona para a página de modelos
+        // Atualiza o estado e o localStorage
+        setModelos(updatedModelos);
+        localStorage.setItem('modelos', JSON.stringify(updatedModelos));
+
+        // Aguarda 100ms antes de redirecionar (para garantir que o localStorage foi atualizado)
+        setTimeout(() => route.push('/modelos'), 100);
     }
 
     return (

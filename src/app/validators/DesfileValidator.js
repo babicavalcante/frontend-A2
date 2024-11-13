@@ -12,9 +12,6 @@ const DesfileValidator = Yup.object().shape({
   designer: Yup.string()
     .required('O nome do designer é obrigatório.'),
 
-  modelo: Yup.string()
-    .required('O nome da modelo é obrigatório.'),
-
   horario: Yup.string()
     .required('O horário é obrigatório.')
     .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Horário inválido. Use o formato HH:MM.'),

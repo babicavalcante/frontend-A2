@@ -4,9 +4,6 @@ const DesignerValidator = Yup.object().shape({
     nome: Yup.string()
         .required('Nome é obrigatório')
         .min(3, 'Nome deve ter pelo menos 3 caracteres'),
-    especialidade: Yup.string()
-        .required('Especialidade é obrigatória')
-        .min(3, 'Especialidade deve ter pelo menos 3 caracteres'),
     email: Yup.string()
         .email('E-mail inválido')
         .required('E-mail é obrigatório'),

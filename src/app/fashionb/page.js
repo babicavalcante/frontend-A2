@@ -121,6 +121,63 @@ export default function FashionB() {
             </Col>
           ))}
         </Row>
+
+        {/* Exibindo as Marcas */}
+        <h2 className="mt-5">Marcas</h2>
+        <Row>
+          {marcas.map((marca) => (
+            <Col md={4} key={marca.id}>
+              <Card>
+                <Card.Img variant="top" src={marca.foto || "/img/default.jpg"} />
+                <Card.Body>
+                  <Card.Title>{marca.nome}</Card.Title>
+                  <Card.Text>{marca.descricao}</Card.Text>
+                  <Link href={`/marcas/${marca.id}`}>
+                    <Button variant="primary">Ver Mais</Button>
+                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Exibindo as Peças */}
+        <h2 className="mt-5">Peças</h2>
+        <Row>
+          {pecas.map((peca) => (
+            <Col md={4} key={peca.id}>
+              <Card>
+                <Card.Img variant="top" src={peca.foto || "/img/default.jpg"} />
+                <Card.Body>
+                  <Card.Title>{peca.nome}</Card.Title>
+                  <Card.Text>{peca.descricao}</Card.Text>
+                  <Link href={`/pecas/${peca.id}`}>
+                    <Button variant="primary">Ver Mais</Button>
+                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Exibindo os Desfiles */}
+        <h2 className="mt-5">Desfiles</h2>
+        <Row>
+          {desfiles.map((desfile) => (
+            <Col md={4} key={desfile.id}>
+              <Card>
+                <Card.Img variant="top" src={desfile.foto || "/img/default.jpg"} />
+                <Card.Body>
+                  <Card.Title>{desfile.nome}</Card.Title>
+                  <Card.Text>{desfile.descricao}</Card.Text>
+                  <Link href={`/desfiles/${desfile.id}`}>
+                    <Button variant="primary">Ver Mais</Button>
+                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </Container>
     </Pagina>
   );

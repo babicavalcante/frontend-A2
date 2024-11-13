@@ -22,7 +22,7 @@ export default function Page() {
         if (typeof window !== 'undefined') {
             const designers = JSON.parse(localStorage.getItem('designers')) || [];
             const dados = designers.find(item => item.id == params.id);
-            setDesigner(dados || { nome: '', especialidade: '', email: '', telefone: '' });
+            setDesigner(dados || { nome: '', email: '', telefone: '' });
         }
     }, [params.id]);
 
@@ -83,18 +83,6 @@ export default function Page() {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="especialidade">
-                                <Form.Label>Especialidade</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="especialidade"
-                                    value={values.especialidade}
-                                    onChange={handleChange}
-                                    isInvalid={errors.especialidade}
-                                    style={{ borderColor: errors.especialidade ? '#dc3545' : '#ced4da' }}
-                                />
-                                <div className="text-danger">{errors.especialidade}</div>
-                            </Form.Group>
 
                             <Form.Group className="mb-3" controlId="email">
                                 <Form.Label>E-mail</Form.Label>

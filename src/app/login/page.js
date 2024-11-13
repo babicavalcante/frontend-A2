@@ -25,7 +25,7 @@ export default function LoginPage() {
     }
 
     // Simulando um processo de autenticação (Você pode integrar com uma API de login real)
-    if (email === "teste@teste.com" && password === "123456") {
+    if (email === "babi@gmail.com" && password === "123456") {
       localStorage.setItem("user", JSON.stringify({ email, password }));
       router.push("/fashionb");  // Redireciona para a página fashionb após o login bem-sucedido
     } else {
@@ -64,7 +64,7 @@ export default function LoginPage() {
           {/* reCAPTCHA */}
           <div className="recaptcha-container">
             <ReCAPTCHA
-              sitekey="SUA_CHAVE_DO_RECAPTCHA_AQUI"
+              sitekey="6Lfujn0qAAAAAGNJ6rzoTXX7ZNYbMD9aYBvDsvLT"
               onChange={(value) => setRecaptchaValue(value)}
             />
           </div>
