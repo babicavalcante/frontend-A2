@@ -8,8 +8,9 @@
 /* Corpo da Página */
 body {
     font-family: 'Helvetica Neue', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #f9f9f9; /* Cor de fundo clara */
+    color: #333; /* Cor de texto padrão */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave para mudanças */
 }
 
 /* Estilo do Carousel */
@@ -21,35 +22,35 @@ body {
 
 .carousel-item img.destaque-img {
     width: 100%;
-    max-height: 500px; /* Altura máxima da imagem */
-    object-fit: cover; /* Garante que a imagem cubra toda a área sem distorção */
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Transição suave para zoom e opacidade */
-    object-position: center top; /* Centraliza a imagem, focando no topo */
+    max-height: 500px; /* Altura máxima para a imagem */
+    object-fit: cover; /* Faz a imagem cobrir a área sem distorção */
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Transição suave para zoom */
+    object-position: center top; /* Centraliza a imagem com foco no topo */
 }
 
 .carousel-item img.destaque-img:hover {
     transform: scale(1.1); /* Zoom suave */
-    opacity: 0.85; /* Transparência suave */
+    opacity: 0.85; /* Transparência suave ao hover */
 }
 
 /* Estilo da legenda */
 .carousel-caption.destaque-caption {
     position: absolute;
-    bottom: 10%; /* Posição da legenda logo acima da parte inferior da imagem */
+    bottom: 10%; /* Legenda fica próxima ao fundo */
     left: 50%;
     transform: translateX(-50%);
-    color: rgb(255, 255, 255);
+    color: #fff;
     font-size: 1.6rem;
     font-weight: bold;
     text-align: center;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Sombra para dar destaque ao texto */
-    letter-spacing: 1px; /* Um pequeno espaçamento entre as letras para um efeito mais sofisticado */
-    transition: opacity 0.3s ease; /* Transição suave */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Sombra no texto para destaque */
+    letter-spacing: 1px;
+    transition: opacity 0.3s ease;
 }
 
 /* Efeito de hover na legenda */
 .carousel-item:hover .carousel-caption.destaque-caption {
-    opacity: 1; /* A legenda fica totalmente visível quando o item é hover */
+    opacity: 1; /* A legenda fica totalmente visível */
 }
 
 /* Card Geral */
@@ -57,17 +58,18 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%; /* Garante que todos os cards tenham a mesma altura */
-    border: 1px solid #ddd; /* Borda fina para os cards */
-    border-radius: 10px;
-    overflow: hidden;
+    height: 100%; /* Cards com altura consistente */
+    border: 1px solid #ddd; /* Borda clara */
+    border-radius: 10px; /* Bordas arredondadas */
+    overflow: hidden; /* Impede o conteúdo de sair das bordas */
     background-color: #fff; /* Fundo branco */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Transição suave para o modo noturno */
 }
 
 .card-img-top {
     width: 100%;
-    height: 200px; /* Define a altura da imagem para todos os cards */
-    object-fit: cover; /* Garantir que as imagens cubram o espaço sem distorcer */
+    height: 200px; /* Definição da altura da imagem */
+    object-fit: cover;
 }
 
 .card-body {
@@ -75,7 +77,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%; /* Faz com que o conteúdo do card preencha o espaço restante */
+    height: 100%;
 }
 
 .card-title {
@@ -87,21 +89,21 @@ body {
 .card-text {
     font-size: 1rem;
     color: #555;
-    flex-grow: 1; /* Faz com que o texto ocupe o restante do espaço disponível */
+    flex-grow: 1;
 }
 
 .card-body .btn {
-    background-color: #f8c8d4; /* Cor rosa bebê */
+    background-color: #f8c8d4; /* Cor de fundo do botão rosa claro */
     color: white;
     font-weight: 600;
-    padding: 6px 15px; /* Menor altura e largura no padding */
-    font-size: 0.9rem; /* Fonte um pouco menor */
+    padding: 6px 15px;
+    font-size: 0.9rem;
     border-radius: 4px;
     border: none;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
     margin-top: auto; /* Garante que o botão fique no final do card */
-    align-self: center; /* Centraliza o botão no card */
+    align-self: center;
 }
 
 .card-body .btn:hover {
@@ -112,26 +114,26 @@ body {
 .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Garantir que os cards fiquem alinhados e distribuídos igualmente */
+    justify-content: space-between;
 }
 
 .col-md-4 {
-    flex: 1 1 30%; /* Garantir que todos os cards ocupem 1/3 da largura disponível */
-    margin: 10px 0; /* Espaçamento entre os cards */
+    flex: 1 1 30%; /* Cards ocupando 1/3 da largura disponível */
+    margin: 10px 0;
 }
 
 .col-md-4 .card {
-    height: 100%; /* Faz com que todos os cards fiquem com a mesma altura */
+    height: 100%;
 }
 
 /* Responsividade - Ajustes para telas menores */
 @media (max-width: 768px) {
     .carousel-caption.destaque-caption {
-        font-size: 1.4rem; /* Ajusta o tamanho do texto em telas menores */
+        font-size: 1.4rem; /* Ajuste da legenda para telas menores */
     }
 
     .card-img-top {
-        height: 180px; /* Reduz a altura da imagem para telas menores */
+        height: 180px; /* Reduz a altura da imagem em telas menores */
     }
 
     .card-body .btn {
@@ -141,11 +143,11 @@ body {
 
 @media (max-width: 480px) {
     .carousel-caption.destaque-caption {
-        font-size: 1.2rem; /* Ajuste do tamanho da legenda para telas muito pequenas */
+        font-size: 1.2rem;
     }
 
     .card-img-top {
-        height: 160px; /* Ajusta a altura da imagem para dispositivos pequenos */
+        height: 160px; /* Ajuste para telas muito pequenas */
     }
 
     .card-body .btn {
@@ -153,7 +155,130 @@ body {
     }
 
     .col-md-4 {
-        flex: 1 1 100%; /* Cards ocupando toda a largura disponível em telas pequenas */
+        flex: 1 1 100%; /* Cards ocupam toda a largura em telas pequenas */
         margin: 10px 0;
     }
+}
+
+/* Estilo do Modal */
+.modal-content {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 800px;
+    margin: auto;
+    transition: transform 0.3s ease-out;
+}
+
+.modal-header {
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.close {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #e4b2b7; /* Cor de hover do botão de fechar */
+}
+
+/* Estilo da Imagem no Modal */
+.modal-body img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+/* Fundo do Modal */
+.modal-backdrop.show {
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro para destacar o modal */
+}
+
+/* Transição do Modal */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50%);
+}
+
+.modal.fade.show .modal-dialog {
+    transform: translate(0, 0);
+}
+
+/* Estilo do Modo Noturno */
+body.night-mode {
+    background-color: #333;
+    color: #f9f9f9;
+}
+
+body.night-mode .card {
+    background-color: #444;
+    border-color: #555;
+}
+
+body.night-mode .carousel-caption.destaque-caption {
+    color: #f9f9f9;
+}
+
+body.night-mode .card-title,
+body.night-mode .card-text {
+    color: #f9f9f9;
+}
+
+body.night-mode .card-body .btn {
+    background-color: #f1a7b1; /* Cor do botão no modo noturno */
+}
+
+body.night-mode .card-body .btn:hover {
+    background-color: #e4b2b7;
+}
+
+body.night-mode .modal-content {
+    background-color: #444;
+    color: #f9f9f9;
+}
+
+body.night-mode .close {
+    color: #f9f9f9;
+}
+
+body.night-mode .close:hover {
+    color: #e4b2b7;
+}
+
+/* Estilo para o botão de alternância de modo noturno */
+.night-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.night-mode-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.7);
 }

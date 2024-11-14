@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Carousel } from "react-bootstrap";
-import { FaShoppingCart } from "react-icons/fa";
+import { Container, Row, Col, Card, Button, Carousel, Modal } from "react-bootstrap";
+import { FaShoppingCart, FaMoon, FaSun } from "react-icons/fa"; // Adicionando ícones
 import Link from "next/link";
 import Pagina from "../components/Pagina/Pagina";
 import './fashionb.css'; // Importando o arquivo de estilos
@@ -38,6 +38,10 @@ export default function FashionB() {
   const [marcas, setMarcas] = useState([]);
   const [pecas, setPecas] = useState([]);
   const [desfiles, setDesfiles] = useState([]);
+  
+  const [isNightMode, setIsNightMode] = useState(false); // Estado do modo noturno
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   // Carregar os dados de cada categoria do localStorage
   useEffect(() => {
@@ -54,9 +58,43 @@ export default function FashionB() {
     setDesfiles(dadosDesfiles);
   }, []);
 
+  // Função para alternar entre o modo claro e escuro
+  const toggleNightMode = () => {
+    setIsNightMode(prevMode => !prevMode);
+  };
+
+  useEffect(() => {
+    if (isNightMode) {
+      document.body.classList.add('night-mode');
+    } else {
+      document.body.classList.remove('night-mode');
+    }
+  }, [isNightMode]);
+
+  // Função para abrir o modal com o conteúdo
+  const openModal = (content) => {
+    setModalContent(content);
+    setShowModal(true);
+  };
+
+  // Função para fechar o modal
+  const closeModal = () => {
+    setShowModal(false);
+    setModalContent(null);
+  };
+
   return (
     <Pagina titulo="FashionB - Página Inicial">
       <Container>
+        {/* Botão para alternar entre o modo claro e o modo noturno */}
+        <Button
+          variant="outline-light"
+          className="night-mode-toggle"
+          onClick={toggleNightMode}
+        >
+          {isNightMode ? <FaSun /> : <FaMoon />} Modo {isNightMode ? "Claro" : "Escuro"}
+        </Button>
+
         {/* Carousel de Destaques */}
         <Carousel interval={5000} fade={true}>
           {destaques.map((destaque) => (
@@ -66,6 +104,8 @@ export default function FashionB() {
                 src={destaque.foto}
                 alt={destaque.nome}
                 loading="lazy" // Para melhorar a performance de carregamento
+                onClick={() => openModal(destaque)} // Abre o modal ao clicar na imagem
+                style={{ cursor: 'pointer' }} // Para indicar que é interativo
               />
               <Carousel.Caption className="destaque-caption">
                 <h3>{destaque.nome}</h3>
@@ -75,14 +115,13 @@ export default function FashionB() {
           ))}
         </Carousel>
 
-
         {/* Exibindo os Modelos */}
         <h2 className="mt-5">Modelos em Destaque</h2>
         <Row>
           {modelos.map((modelo) => (
             <Col md={4} key={modelo.id}>
               <Card>
-                <Card.Img variant="top" src={modelo.foto} />
+                <Card.Img variant="top" src={modelo.foto} onClick={() => openModal(modelo)} style={{ cursor: 'pointer' }} />
                 <Card.Body>
                   <Card.Title>{modelo.nome}</Card.Title>
                   <Card.Text>{modelo.descricao}</Card.Text>
@@ -101,7 +140,7 @@ export default function FashionB() {
           {designers.map((designer) => (
             <Col md={4} key={designer.id}>
               <Card>
-                <Card.Img variant="top" src={designer.foto || "/img/default.jpg"} />
+                <Card.Img variant="top" src={designer.foto || "/img/default.jpg"} onClick={() => openModal(designer)} style={{ cursor: 'pointer' }} />
                 <Card.Body>
                   <Card.Title>{designer.nome}</Card.Title>
                   <Link href="/designers" passHref>
@@ -119,7 +158,7 @@ export default function FashionB() {
           {marcas.map((marca) => (
             <Col md={4} key={marca.id}>
               <Card>
-                <Card.Img variant="top" src={marca.foto || "/img/default.jpg"} />
+                <Card.Img variant="top" src={marca.foto || "/img/default.jpg"} onClick={() => openModal(marca)} style={{ cursor: 'pointer' }} />
                 <Card.Body>
                   <Card.Title>{marca.nome}</Card.Title>
                   <Card.Text>{marca.descricao}</Card.Text>
@@ -138,7 +177,7 @@ export default function FashionB() {
           {pecas.map((peca) => (
             <Col md={4} key={peca.id}>
               <Card>
-                <Card.Img variant="top" src={peca.foto || "/img/default.jpg"} />
+                <Card.Img variant="top" src={peca.foto || "/img/default.jpg"} onClick={() => openModal(peca)} style={{ cursor: 'pointer' }} />
                 <Card.Body>
                   <Card.Title>{peca.nome}</Card.Title>
                   <Card.Text>{peca.descricao}</Card.Text>
@@ -153,11 +192,11 @@ export default function FashionB() {
 
         {/* Exibindo os Desfiles */}
         <h2 className="mt-5">Desfiles</h2>
-        <Row className="gy-4"> {/* gy-4 define o gap entre as linhas */}
+        <Row className="gy-4">
           {desfiles.map((desfile) => (
             <Col md={4} key={desfile.id}>
               <Card>
-                <Card.Img variant="top" src={desfile.foto || "/img/default.jpg"} />
+                <Card.Img variant="top" src={desfile.foto || "/img/default.jpg"} onClick={() => openModal(desfile)} style={{ cursor: 'pointer' }} />
                 <Card.Body>
                   <Card.Title>{desfile.nome}</Card.Title>
                   <Card.Text>{desfile.descricao}</Card.Text>
@@ -169,6 +208,22 @@ export default function FashionB() {
             </Col>
           ))}
         </Row>
+
+        {/* Modal */}
+        <Modal show={showModal} onHide={closeModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>{modalContent?.nome || 'Detalhes'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {modalContent?.foto && <img src={modalContent.foto} alt={modalContent.nome} className="w-100" />}
+            <p>{modalContent?.descricao}</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeModal}>
+              Fechar
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
       </Container>
     </Pagina>
