@@ -94,7 +94,6 @@ export default function Page() {
                                     value={values.nome}
                                     onChange={handleChange}
                                     isInvalid={errors.nome}
-                                    style={{ borderColor: errors.nome ? '#dc3545' : '#ced4da' }}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     {errors.nome}
@@ -109,7 +108,6 @@ export default function Page() {
                                     value={values.email}
                                     onChange={handleChange}
                                     isInvalid={errors.email}
-                                    style={{ borderColor: errors.email ? '#dc3545' : '#ced4da' }}
                                 />
                                 <div className="text-danger">{errors.email}</div>
                             </Form.Group>
@@ -124,7 +122,6 @@ export default function Page() {
                                         setFieldValue('telefone', mask(value.target.value, '(99) 99999-9999'))
                                     }}
                                     isInvalid={errors.telefone}
-                                    style={{ borderColor: errors.telefone ? '#dc3545' : '#ced4da' }}
                                 />
                                 <div className="text-danger">{errors.telefone}</div>
                             </Form.Group>
@@ -138,7 +135,6 @@ export default function Page() {
                                     value={values.descricao}
                                     onChange={handleChange}
                                     isInvalid={errors.descricao}
-                                    style={{ borderColor: errors.descricao ? '#dc3545' : '#ced4da' }}
                                 />
                                 <div className="text-danger">{errors.descricao}</div>
                             </Form.Group>

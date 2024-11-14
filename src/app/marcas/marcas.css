@@ -50,13 +50,16 @@
     justify-content: space-between;
     height: 380px; /* Tamanho fixo do card */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Para garantir que os ícones não saiam do limite do card */
 }
 
+/* Efeito de hover nos cards */
 .card:hover {
     transform: translateY(-5px); /* Efeito de hover */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Imagens dentro dos cards */
 .card img {
     max-width: 100%;
     height: 150px; /* Definir altura fixa para as imagens */
@@ -65,13 +68,14 @@
     margin-bottom: 15px;
 }
 
+/* Títulos dos cards */
 .card h3 {
     font-size: 1.25rem;
     color: #333;
     margin-bottom: 10px;
 }
 
-/* Detalhes da marca */
+/* Detalhes da marca (descrição) */
 .card p {
     font-size: 1rem;
     color: #666;
@@ -84,6 +88,7 @@
 .card .actions {
     display: flex;
     justify-content: space-between;
+    align-items: center; /* Alinha os ícones verticalmente */
     margin-top: 15px;
 }
 
@@ -94,10 +99,19 @@
     border: none;
     cursor: pointer;
     transition: color 0.3s;
+    display: inline-flex;
+    align-items: center; /* Garante que os ícones não sejam cortados */
+    justify-content: center;
+    width: 40px; /* Tamanho fixo para os botões */
+    height: 40px; /* Tamanho fixo para os botões */
+    border-radius: 50%; /* Botões circulares */
+    background-color: #f0f0f0; /* Cor de fundo para os botões */
+    margin: 0 5px;
 }
 
 .card .actions a:hover, .card .actions button:hover {
     color: #dbadbe; /* Cor rosa para o hover */
+    background-color: #e5a8b8; /* Cor de fundo ao passar o mouse */
 }
 
 /* Responsividade */
@@ -116,5 +130,11 @@
 
     .card img {
         height: 120px; /* Ajuste para telas menores */
+    }
+
+    /* Ajustes para os ícones em telas menores */
+    .card .actions a, .card .actions button {
+        width: 35px; /* Ajusta o tamanho dos botões para telas pequenas */
+        height: 35px;
     }
 }

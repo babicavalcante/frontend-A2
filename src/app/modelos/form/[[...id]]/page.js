@@ -12,7 +12,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 import { mask } from "remask";
 import { v4 } from "uuid";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";  // Importando o CSS do react-datepicker
+import "react-datepicker/dist/react-datepicker.css"; // Importando o CSS do react-datepicker
 
 export default function Page({ params }) {
     const route = useRouter();
@@ -38,10 +38,10 @@ export default function Page({ params }) {
         if (params.id) {
             const modeloExistente = storedModelos.find(item => item.id === params.id);
             if (modeloExistente) {
-                setModelo(modeloExistente);
+                setModelo(modeloExistente); // Carrega os dados do modelo para edição
             }
         }
-    }, [params.id]);  // A dependência agora garante que a página será atualizada quando 'id' mudar
+    }, [params.id]); // A dependência agora garante que a página será atualizada quando 'id' mudar
 
     // Função para salvar ou atualizar o modelo
     function salvar(dados) {
@@ -95,6 +95,17 @@ export default function Page({ params }) {
                         }
                     };
 
+                    // Corrigir o formato da data (ao exibir no DatePicker)
+                    const formatDate = (date) => {
+                        return date ? new Date(date) : null; // Convertendo para objeto Date
+                    };
+
+                    // Formatar a data antes de salvar
+                    const handleSave = (values) => {
+                        const formattedValues = { ...values, data: values.data.toISOString() };
+                        salvar(formattedValues);
+                    };
+
                     return (
                         <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }} onSubmit={handleSubmit}>
                             <Form.Group className="mb-3" controlId="nome">
@@ -116,7 +127,7 @@ export default function Page({ params }) {
                             <Form.Group className="mb-3" controlId="data">
                                 <Form.Label>Data de Nascimento</Form.Label>
                                 <DatePicker
-                                    selected={values.data ? new Date(values.data) : null} // Formatação da data
+                                    selected={formatDate(values.data)} // Formatação da data
                                     onChange={(date) => setFieldValue("data", date)} // Atualiza o valor de data no Formik
                                     dateFormat="dd/MM/yyyy" // Formato da data
                                     className={`form-control ${errors.data ? 'is-invalid' : ''}`} // Classe para erro
@@ -196,23 +207,20 @@ export default function Page({ params }) {
                                 <Form.Label>Foto</Form.Label>
                                 <Form.Control
                                     type="file"
-                                    name="foto"
+                                    accept="image/*"
                                     onChange={handleFileChange}
                                     isInvalid={errors.foto}
+                                    style={{ borderColor: errors.foto ? '#dc3545' : '#ced4da' }}
                                 />
-                                <Form.Control.Feedback type="invalid">{errors.foto}</Form.Control.Feedback>
-                            </Form.Group>
-
-                            {/* Exibir a imagem prévia selecionada */}
-                            {values.foto && (
-                                <div className="mb-3">
+                                {values.foto && (
                                     <img
                                         src={values.foto}
                                         alt="Pré-visualização"
                                         style={{ maxWidth: '200px', maxHeight: '200px', objectFit: 'cover' }}
                                     />
-                                </div>
-                            )}
+                                )}
+                                <Form.Control.Feedback type="invalid">{errors.foto}</Form.Control.Feedback>
+                            </Form.Group>
 
                             <div className="text-center">
                                 <Button type="submit" variant="primary" className="me-2">

@@ -1,8 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Carousel, Modal } from "react-bootstrap";
-import Link from "next/link";
+import { Container, Row, Col, Card, Carousel, Modal, Button } from "react-bootstrap";
 import Pagina from "../components/Pagina/Pagina";
 import './fashionb.css'; // Importando o arquivo de estilos
 
@@ -102,68 +101,6 @@ export default function FashionB() {
                 <Card.Body>
                   <Card.Title>{modelo.nome}</Card.Title>
                   <Card.Text>{modelo.descricao}</Card.Text>
-                  <Link href="/modelos" passHref>
-                    <Button variant="primary">Ver Mais</Button>
-                  </Link>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        {/* Exibindo os Designers */}
-        <h2 className="mt-5">Designers</h2>
-        <p>Os visionários por trás das coleções mais inovadoras da indústria da moda. Conheça os criadores que estão moldando o futuro da alta-costura.</p>
-        <Row>
-          {designers.map((designer) => (
-            <Col md={4} key={designer.id}>
-              <Card>
-                <Card.Img variant="top" src={designer.foto || "/img/default.jpg"} onClick={() => openModal(designer)} style={{ cursor: 'pointer' }} />
-                <Card.Body>
-                  <Card.Title>{designer.nome}</Card.Title>
-                  <Link href="/designers" passHref>
-                    <Button variant="primary">Ver Mais</Button>
-                  </Link>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        {/* Exibindo as Marcas */}
-        <h2 className="mt-5">Marcas</h2>
-        <p>Com designs que refletem inovação, qualidade e estilo, essas marcas estão na vanguarda da moda mundial.</p>
-        <Row>
-          {marcas.map((marca) => (
-            <Col md={4} key={marca.id}>
-              <Card>
-                <Card.Img variant="top" src={marca.foto || "/img/default.jpg"} onClick={() => openModal(marca)} style={{ cursor: 'pointer' }} />
-                <Card.Body>
-                  <Card.Title>{marca.nome}</Card.Title>
-                  <Card.Text>{marca.descricao}</Card.Text>
-                  <Link href="/marcas" passHref>
-                    <Button variant="primary">Ver Mais</Button>
-                  </Link>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        {/* Exibindo as Peças */}
-        <h2 className="mt-5">Peças</h2>
-        <p>Descubra as peças mais icônicas da temporada. Roupas que combinam com qualquer estilo e ambiente, trazendo o melhor da moda para o seu guarda-roupa.</p>
-        <Row>
-          {pecas.map((peca) => (
-            <Col md={4} key={peca.id}>
-              <Card>
-                <Card.Img variant="top" src={peca.foto || "/img/default.jpg"} onClick={() => openModal(peca)} style={{ cursor: 'pointer' }} />
-                <Card.Body>
-                  <Card.Title>{peca.nome}</Card.Title>
-                  <Card.Text>{peca.descricao}</Card.Text>
-                  <Link href="/pecas" passHref>
-                    <Button variant="primary">Ver Mais</Button>
-                  </Link>
                 </Card.Body>
               </Card>
             </Col>
@@ -181,9 +118,55 @@ export default function FashionB() {
                 <Card.Body>
                   <Card.Title>{desfile.nome}</Card.Title>
                   <Card.Text>{desfile.descricao}</Card.Text>
-                  <Link href="/desfiles" passHref>
-                    <Button variant="primary">Ver Mais</Button>
-                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Exibindo as Marcas */}
+        <h2 className="mt-5">Marcas</h2>
+        <p>Com designs que refletem inovação, qualidade e estilo, essas marcas estão na vanguarda da moda mundial.</p>
+        <Row>
+          {marcas.map((marca) => (
+            <Col md={4} key={marca.id}>
+              <Card>
+                <Card.Img variant="top" src={marca.foto || "/img/default.jpg"} onClick={() => openModal(marca)} style={{ cursor: 'pointer' }} />
+                <Card.Body>
+                  <Card.Title>{marca.nome}</Card.Title>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Exibindo as Peças */}
+        <h2 className="mt-5">Peças</h2>
+        <p>Descubra as peças mais icônicas da temporada. Roupas que combinam com qualquer estilo e ambiente, trazendo o melhor da moda para o seu guarda-roupa.</p>
+        <Row>
+          {pecas.map((peca) => (
+            <Col md={4} key={peca.id}>
+              <Card>
+                <Card.Img variant="top" src={peca.foto || "/img/default.jpg"} onClick={() => openModal(peca)} style={{ cursor: 'pointer' }} />
+                <Card.Body>
+                  <Card.Title>{peca.nome}</Card.Title>
+                  <Card.Text>{peca.descricao}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* Exibindo os Designers */}
+        <h2 className="mt-5">Designers</h2>
+        <p>Os visionários por trás das coleções mais inovadoras da indústria da moda. Conheça os criadores que estão moldando o futuro da alta-costura.</p>
+        <Row>
+          {designers.map((designer) => (
+            <Col md={4} key={designer.id}>
+              <Card>
+                <Card.Img variant="top" src={designer.foto || "/img/default.jpg"} onClick={() => openModal(designer)} style={{ cursor: 'pointer' }} />
+                <Card.Body>
+                  <Card.Title>{designer.nome}</Card.Title>
                 </Card.Body>
               </Card>
             </Col>
@@ -205,7 +188,6 @@ export default function FashionB() {
             </Button>
           </Modal.Footer>
         </Modal>
-
       </Container>
     </Pagina>
   );

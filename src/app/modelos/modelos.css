@@ -84,3 +84,26 @@
 .actions button:hover {
     color: #0056b3;
 }
+
+/* Estilos específicos para o formulário de edição */
+.form-container img {
+    max-width: 200px;  /* Limita a largura da imagem */
+    max-height: 200px; /* Limita a altura da imagem */
+    object-fit: cover; /* Garante que a imagem seja cortada de forma proporcional */
+    margin-bottom: 15px;
+}
+
+/* Botões de salvar e voltar */
+.btn-primary, .btn-secondary {
+    background-color: #dbadbe;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    background-color: #c291a2; /* Cor de hover para os botões */
+}

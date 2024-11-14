@@ -1,31 +1,12 @@
 import * as Yup from 'yup';
 
-// Função para calcular a idade com base na data de nascimento
-const calcularIdade = (dataNascimento) => {
-    const dataAtual = new Date();
-    const nascimento = new Date(dataNascimento);
-    let idade = dataAtual.getFullYear() - nascimento.getFullYear();
-    const mes = dataAtual.getMonth();
-    if (mes < nascimento.getMonth() || (mes === nascimento.getMonth() && dataAtual.getDate() < nascimento.getDate())) {
-        idade--;
-    }
-    return idade;
-};
-
 const ModeloValidator = Yup.object().shape({
     nome: Yup.string()
         .required('O nome é obrigatório')
         .min(3, 'O nome deve ter pelo menos 3 caracteres'),
 
     data: Yup.date()
-        .required('A data de nascimento é obrigatória')
-        .test('idade', 'A modelo deve ter pelo menos 14 anos', (value) => {
-            if (value) {
-                const idade = calcularIdade(value);
-                return idade >= 14;
-            }
-            return false;
-        }),
+        .required('A data de nascimento é obrigatória'),
 
     altura: Yup.number()
         .required('A altura é obrigatória')
