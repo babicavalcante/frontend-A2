@@ -1,7 +1,7 @@
 'use client';
 
 import { Container, Nav, NavDropdown, Navbar, Form, FormControl, Button, Dropdown } from "react-bootstrap";
-import { FaSearch, FaUser, FaShoppingCart, FaHeart, FaGlobe } from "react-icons/fa"; // Importando o ícone do globo
+import { FaSearch, FaUser, FaShoppingCart, FaHeart, FaGlobe, FaMoon, FaSun } from "react-icons/fa"; // Ícones de modo noturno
 import Link from "next/link"; // Importando o Link do Next.js
 import { useState, useEffect } from "react";
 import './Pagina.css'; // Certifique-se de que seu CSS está sendo carregado corretamente.
@@ -9,21 +9,40 @@ import Footer from "../Footer/Footer";
 
 export default function Pagina(props) {
     const [language, setLanguage] = useState('pt'); // Estado para armazenar o idioma atual
+    const [isNightMode, setIsNightMode] = useState(false); // Estado para controle do modo noturno
 
     // Função para alterar o idioma e salvar no localStorage
     const handleLanguageChange = (lang) => {
         setLanguage(lang);
         localStorage.setItem('language', lang); // Armazenando a preferência de idioma
-        // Aqui você pode adicionar a lógica de carregamento do idioma (como carregar traduções, etc.)
     };
 
-    // Carregar idioma salvo no localStorage, caso exista
+    // Carregar idioma e modo salvo no localStorage, caso existam
     useEffect(() => {
         const savedLanguage = localStorage.getItem('language');
+        const savedMode = localStorage.getItem('isNightMode') === 'true'; // Verificar se está no modo noturno
         if (savedLanguage) {
             setLanguage(savedLanguage);
         }
+        setIsNightMode(savedMode);
+        if (savedMode) {
+            document.body.classList.add('night-mode');
+        }
     }, []);
+
+    // Função para alternar entre modo claro e modo escuro
+    const toggleNightMode = () => {
+        setIsNightMode(prevMode => {
+            const newMode = !prevMode;
+            localStorage.setItem('isNightMode', newMode); // Salvar no localStorage
+            if (newMode) {
+                document.body.classList.add('night-mode');
+            } else {
+                document.body.classList.remove('night-mode');
+            }
+            return newMode;
+        });
+    };
 
     return (
         <>
@@ -70,7 +89,6 @@ export default function Pagina(props) {
                             </Nav.Link>
 
                             {/* Seletor de Idioma */}
-                            {/* Seletor de Idioma */}
                             <Nav.Link className="navbar-nav-item">
                                 <Dropdown>
                                     <Dropdown.Toggle variant="link" id="dropdown-language" className="nav-link">
@@ -90,6 +108,10 @@ export default function Pagina(props) {
                                 </Dropdown>
                             </Nav.Link>
 
+                            {/* Ícone de Modo Noturno */}
+                            <Nav.Link onClick={toggleNightMode} className="nav-icon">
+                                {isNightMode ? <FaSun /> : <FaMoon />} {/* Exibe o ícone correspondente */}
+                            </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

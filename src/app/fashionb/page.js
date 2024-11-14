@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Carousel, Modal } from "react-bootstrap";
-import { FaShoppingCart, FaMoon, FaSun } from "react-icons/fa"; // Adicionando ícones
 import Link from "next/link";
 import Pagina from "../components/Pagina/Pagina";
 import './fashionb.css'; // Importando o arquivo de estilos
@@ -24,12 +23,12 @@ const destaques = [
   {
     id: 2,
     nome: "Victoria's Secret Fashion Show 2024",
-    foto: "https://www.billboard.com/wp-content/uploads/2024/10/gigi-hadid-victorias-secret-fashion-show-2024-billboard-1548.jpg?w=1024",
+    foto: "https://www.billboard.com/wp-content/uploads/2024/10/gigi-hadid-victorias-secret-fashion-show-2024-billboard-1548.jpg?w=1024"
   },
   {
     id: 3,
     nome: "Schiaparelli Fall 2024 Couture",
-    foto: "https://images.elle.com.br/2024/06/00021-schiaparelli-fall-2024-couture-credit-brand-1240x1680.webp",
+    foto: "https://images.elle.com.br/2024/06/00021-schiaparelli-fall-2024-couture-credit-brand-1240x1680.webp"
   }
 ];
 
@@ -39,7 +38,6 @@ export default function FashionB() {
   const [pecas, setPecas] = useState([]);
   const [desfiles, setDesfiles] = useState([]);
   
-  const [isNightMode, setIsNightMode] = useState(false); // Estado do modo noturno
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
@@ -58,19 +56,6 @@ export default function FashionB() {
     setDesfiles(dadosDesfiles);
   }, []);
 
-  // Função para alternar entre o modo claro e escuro
-  const toggleNightMode = () => {
-    setIsNightMode(prevMode => !prevMode);
-  };
-
-  useEffect(() => {
-    if (isNightMode) {
-      document.body.classList.add('night-mode');
-    } else {
-      document.body.classList.remove('night-mode');
-    }
-  }, [isNightMode]);
-
   // Função para abrir o modal com o conteúdo
   const openModal = (content) => {
     setModalContent(content);
@@ -84,17 +69,8 @@ export default function FashionB() {
   };
 
   return (
-    <Pagina titulo="FashionB - Página Inicial">
+    <Pagina>
       <Container>
-        {/* Botão para alternar entre o modo claro e o modo noturno */}
-        <Button
-          variant="outline-light"
-          className="night-mode-toggle"
-          onClick={toggleNightMode}
-        >
-          {isNightMode ? <FaSun /> : <FaMoon />} Modo {isNightMode ? "Claro" : "Escuro"}
-        </Button>
-
         {/* Carousel de Destaques */}
         <Carousel interval={5000} fade={true}>
           {destaques.map((destaque) => (
@@ -117,6 +93,7 @@ export default function FashionB() {
 
         {/* Exibindo os Modelos */}
         <h2 className="mt-5">Modelos em Destaque</h2>
+        <p>Conheça os rostos que estão dominando as passarelas e deixando sua marca no mundo da moda. Cada um com uma história única e um estilo que inspira.</p>
         <Row>
           {modelos.map((modelo) => (
             <Col md={4} key={modelo.id}>
@@ -136,6 +113,7 @@ export default function FashionB() {
 
         {/* Exibindo os Designers */}
         <h2 className="mt-5">Designers</h2>
+        <p>Os visionários por trás das coleções mais inovadoras da indústria da moda. Conheça os criadores que estão moldando o futuro da alta-costura.</p>
         <Row>
           {designers.map((designer) => (
             <Col md={4} key={designer.id}>
@@ -154,6 +132,7 @@ export default function FashionB() {
 
         {/* Exibindo as Marcas */}
         <h2 className="mt-5">Marcas</h2>
+        <p>Com designs que refletem inovação, qualidade e estilo, essas marcas estão na vanguarda da moda mundial.</p>
         <Row>
           {marcas.map((marca) => (
             <Col md={4} key={marca.id}>
@@ -173,6 +152,7 @@ export default function FashionB() {
 
         {/* Exibindo as Peças */}
         <h2 className="mt-5">Peças</h2>
+        <p>Descubra as peças mais icônicas da temporada. Roupas que combinam com qualquer estilo e ambiente, trazendo o melhor da moda para o seu guarda-roupa.</p>
         <Row>
           {pecas.map((peca) => (
             <Col md={4} key={peca.id}>
@@ -192,6 +172,7 @@ export default function FashionB() {
 
         {/* Exibindo os Desfiles */}
         <h2 className="mt-5">Desfiles</h2>
+        <p>Prepare-se para uma experiência visual única. Os desfiles de moda mais aguardados mostram o que há de mais recente e ousado no universo fashion.</p>
         <Row className="gy-4">
           {desfiles.map((desfile) => (
             <Col md={4} key={desfile.id}>

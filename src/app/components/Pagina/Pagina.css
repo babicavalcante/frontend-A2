@@ -2,10 +2,10 @@
 .navbar-custom {
   background-color: #f7c1d6 !important; /* Rosa bebê */
   border-bottom: 2px solid #e5a8b8 !important;
+  font-family: 'Helvetica', sans-serif;
 }
 
 .navbar-logo {
-  font-family: 'Helvetica', sans-serif;
   font-size: 2rem;
   color: #333;
   font-weight: 700;
@@ -16,31 +16,24 @@
   color: #e5a8b8;
 }
 
-.search-form {
-  margin-left: auto;
-}
-
-.search-input {
-  border-radius: 20px;
-  padding: 10px 20px;
-}
-
-.search-button {
-  border-radius: 20px;
-}
-
-/* Alinhar todos os ícones da navbar com o mesmo espaçamento */
+/* Alinhar os ícones da navbar e torná-los maiores */
 .navbar-nav .nav-link {
   display: flex;
   align-items: center;
-  margin-right: 10px; /* Espaçamento entre os ícones */
+  margin-right: 15px; /* Espaçamento entre os ícones */
 }
 
 .navbar-nav .nav-link .nav-icon {
-  font-size: 1.5rem; /* Tamanho uniforme para todos os ícones */
-  color: #333;
+  font-size: 1.2rem; /* Tamanho maior para os ícones */
+  color: #333; /* Cor original dos ícones */
   cursor: pointer;
   transition: color 0.3s ease;
+}
+
+/* Ícone de Lua/Sol */
+.navbar-nav .nav-link.night-mode-toggle .nav-icon {
+  font-size: 1.8rem; /* Tamanho igual aos outros ícones */
+  color: #333; /* Cor original do ícone */
 }
 
 /* Quando passar o mouse sobre qualquer ícone */
@@ -64,6 +57,20 @@
 #dropdown-language .dropdown-item:hover {
   background-color: #e5a8b8;
   color: #fff;
+}
+
+/* Barra de pesquisa */
+.search-form {
+  margin-left: auto;
+}
+
+.search-input {
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.search-button {
+  border-radius: 20px;
 }
 
 /* Página header */
@@ -94,4 +101,27 @@
   .card-body {
     padding: 10px;
   }
+}
+
+/* Modo Escuro (ativado por .night-mode) */
+body.night-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.night-mode .navbar-custom {
+  background-color: #1a1a1a;
+  border-bottom: 2px solid #444;
+}
+
+body.night-mode .navbar-logo {
+  color: #f0f0f0;
+}
+
+body.night-mode .navbar-nav .nav-link .nav-icon {
+  color: #f0f0f0;
+}
+
+body.night-mode .navbar-nav .nav-link:hover .nav-icon {
+  color: #e5a8b8;
 }
