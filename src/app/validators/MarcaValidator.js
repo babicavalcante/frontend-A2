@@ -8,14 +8,15 @@ const MarcaValidator = Yup.object().shape({
         .required('Fundador é obrigatório')
         .min(3, 'Fundador deve ter pelo menos 3 caracteres'),
     ano_fundacao: Yup.string()
-        .required('Ano de Fundação é obrigatório')
-        .matches(/^\d{4}$/, 'Ano de Fundação deve ter 4 dígitos'),
+        .required('Ano de Fundação é obrigatório'),
     pais_origem: Yup.string()
-        .required('País de Origem é obrigatório')
-        .min(2, 'País de Origem deve ter pelo menos 2 caracteres'),
-    logo: Yup.string()
-        .url('Logo deve ser uma URL válida')
+        .required('País de Origem é obrigatório'),
+    logo: Yup.mixed()
         .required('Logo é obrigatório'),
+    descricao: Yup.string()
+    .required('A descrição é obrigatória.')
+    .min(10, 'A descrição deve ter pelo menos 10 caracteres.')
+    .max(500, 'A descrição não pode ter mais de 500 caracteres.'),
 });
 
 export default MarcaValidator;

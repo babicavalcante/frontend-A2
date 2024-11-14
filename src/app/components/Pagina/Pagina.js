@@ -50,7 +50,7 @@ export default function Pagina(props) {
                         <Form className="d-flex search-form">
                             <FormControl
                                 type="search"
-                                placeholder="Buscar produtos"
+                                placeholder="Buscar desfiles"
                                 className="me-2 search-input"
                                 aria-label="Search"
                             />

@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FaCheck } from "react-icons/fa";
 import { MdOutlineArrowBack } from "react-icons/md";
-import { mask } from "remask";
 import { v4 } from "uuid";
 import axios from "axios";
 import DatePicker from "react-datepicker";
@@ -20,7 +19,7 @@ export default function Page() {
     const params = useParams();
 
     const [marca, setMarca] = useState({
-        nome: '', fundador: '', ano_fundacao: '', pais_origem: '', logo: ''
+        nome: '', fundador: '', ano_fundacao: '', pais_origem: '', logo: '', descricao: ''  // Adicionando descrição
     });
     const [paisOptions, setPaisOptions] = useState([]); // Lista de países
     const [anoSelecionado, setAnoSelecionado] = useState(null);
@@ -30,7 +29,7 @@ export default function Page() {
         if (typeof window !== 'undefined') {
             const marcas = JSON.parse(localStorage.getItem('marcas')) || [];
             const dados = marcas.find(item => item.id == params.id);
-            setMarca(dados || { nome: '', email: '', telefone: '', pais_origem: '' });
+            setMarca(dados || { nome: '', email: '', telefone: '', pais_origem: '', descricao: '' });  // Incluindo descrição
         }
 
         // Busca os países da API
@@ -66,6 +65,20 @@ export default function Page() {
         localStorage.setItem('marcas', JSON.stringify(marcas));
         route.push('/marcas');
     }
+
+    // Função para upload do logo
+    const handleLogoUpload = (e, setFieldValue) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // Armazena a URL do arquivo no localStorage
+                const logoUrl = URL.createObjectURL(file); // Gera URL temporária
+                setFieldValue("logo", logoUrl); // Salva a URL no formulário
+            };
+            reader.readAsDataURL(file); // Lê o arquivo como base64, se necessário
+        }
+    };
 
     return (
         <Pagina titulo="Marcas">
@@ -157,16 +170,29 @@ export default function Page() {
                                 <div className="text-danger">{errors.pais_origem}</div>
                             </Form.Group>
 
-                            {/* Campo Logo (URL) */}
-                            <Form.Group className="mb-3" controlId="logo">
-                                <Form.Label>Logo (URL)</Form.Label>
+                            {/* Campo Descrição */}
+                            <Form.Group className="mb-3" controlId="descricao">
+                                <Form.Label>Descrição</Form.Label>
                                 <Form.Control
-                                    type="text"
-                                    name="logo"
-                                    value={values.logo}
+                                    as="textarea"
+                                    name="descricao"
+                                    value={values.descricao}
                                     onChange={handleChange}
+                                    isInvalid={errors.descricao}
+                                />
+                                <div className="text-danger">{errors.descricao}</div>
+                            </Form.Group>
+
+                            {/* Campo Logo (Upload) */}
+                            <Form.Group className="mb-3" controlId="logo">
+                                <Form.Label>Logo</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    name="logo"
+                                    onChange={(e) => handleLogoUpload(e, setFieldValue)}
                                     isInvalid={errors.logo}
                                 />
+                                {values.logo && <img src={values.logo} alt="Logo" style={{ width: "100px", marginTop: "10px" }} />}
                                 <div className="text-danger">{errors.logo}</div>
                             </Form.Group>
 
