@@ -10,6 +10,10 @@ const DesignerValidator = Yup.object().shape({
     telefone: Yup.string()
         .required('Telefone é obrigatório')
         .matches(/^\(\d{2}\) \d{5}-\d{4}$/, 'Telefone deve estar no formato (99) 99999-9999'),
+    descricao: Yup.string()
+        .required('A descrição é obrigatória.')
+        .min(10, 'A descrição deve ter pelo menos 10 caracteres.')
+        .max(500, 'A descrição não pode ter mais de 500 caracteres.'),
 });
 
 export default DesignerValidator;
