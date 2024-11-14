@@ -36,7 +36,7 @@ export default function FashionB() {
   const [marcas, setMarcas] = useState([]);
   const [pecas, setPecas] = useState([]);
   const [desfiles, setDesfiles] = useState([]);
-  
+
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
@@ -181,6 +181,23 @@ export default function FashionB() {
           <Modal.Body>
             {modalContent?.foto && <img src={modalContent.foto} alt={modalContent.nome} className="w-100" />}
             <p>{modalContent?.descricao}</p>
+
+            {/* Exibir informações adicionais com base no tipo de item */}
+            {modalContent?.altura && <p><strong>Altura:</strong> {modalContent.altura}</p>}
+            {modalContent?.peso && <p><strong>Peso:</strong> {modalContent.peso}</p>}
+            {modalContent?.idade && <p><strong>Idade:</strong> {modalContent.idade}</p>}
+            {modalContent?.peça && <p><strong>Peça de Roupa:</strong> {modalContent.peça}</p>}
+
+            {modalContent?.marca && <p><strong>Marca:</strong> {modalContent.marca}</p>}
+            {modalContent?.designer && <p><strong>Designer:</strong> {modalContent.designer}</p>}
+            {modalContent?.data && <p><strong>Data:</strong> {modalContent.data}</p>}
+            {modalContent?.horario && <p><strong>Horário:</strong> {modalContent.horario}</p>}
+            {modalContent?.descricao && <p><strong>Descrição</strong> {modalContent.descricao}</p>}
+
+            {modalContent?.fundador && <p><strong>Fundador:</strong> {modalContent.fundador}</p>}
+            {modalContent?.preco && <p><strong>Preço:</strong> {modalContent.preco}</p>}
+            {modalContent?.categoria && <p><strong>Categoria:</strong> {modalContent.categoria}</p>}
+            {modalContent?.cor && <p><strong>Cor:</strong> {modalContent.cor}</p>}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={closeModal}>

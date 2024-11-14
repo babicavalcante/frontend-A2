@@ -20,7 +20,6 @@ export default function Page({ params }) {
     const [pecas, setPecas] = useState([]);
     const [modelo, setModelo] = useState({
         nome: '',
-        data: '',
         altura: '',
         telefone: '',
         email: '',
@@ -120,26 +119,6 @@ export default function Page({ params }) {
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     {errors.nome}
-                                </Form.Control.Feedback>
-                            </Form.Group>
-
-                            {/* Novo campo com React DatePicker */}
-                            <Form.Group className="mb-3" controlId="data">
-                                <Form.Label>Data de Nascimento</Form.Label>
-                                <DatePicker
-                                    selected={formatDate(values.data)} // Formatação da data
-                                    onChange={(date) => setFieldValue("data", date)} // Atualiza o valor de data no Formik
-                                    dateFormat="dd/MM/yyyy" // Formato da data
-                                    className={`form-control ${errors.data ? 'is-invalid' : ''}`} // Classe para erro
-                                    placeholderText="Escolha a data"
-                                    showYearDropdown // Mostra o dropdown para ano
-                                    scrollableMonthYearDropdown // Permite rolar entre os anos
-                                    yearDropdownItemNumber={15} // Limita o número de anos visíveis
-                                    minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 100))} // Data mínima (100 anos atrás)
-                                    maxDate={new Date()} // Data máxima (hoje)
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.data}
                                 </Form.Control.Feedback>
                             </Form.Group>
 

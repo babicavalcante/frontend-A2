@@ -40,9 +40,9 @@ export default function Page() {
                                 <h3>{item.nome}</h3>
                                 <p><strong>Marca:</strong> {item.marca}</p>
                                 <p><strong>Designer:</strong> {item.designer}</p>
-                                <p><strong>Modelo:</strong> {item.modelo}</p>
                                 <p><strong>Horário:</strong> {item.horario}</p>
                                 <p><strong>Data:</strong> {item.data}</p>
+                                <p><strong>Descrição:</strong> {item.descricao}</p>
 
                                 <div className="actions">
                                     <Link href={`/desfiles/form/${item.id}`}>

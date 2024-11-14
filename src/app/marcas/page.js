@@ -40,6 +40,7 @@ export default function Page() {
                                 <h3>{item.nome}</h3>
                                 <p><strong>Fundador:</strong> {item.fundador}</p>
                                 <p><strong>Descrição:</strong> {item.descricao}</p>
+                                <p><strong>Ano de Fundação:</strong> {item.ano_fundacao}</p>
                                 <p><strong>País de Origem:</strong> {item.pais_origem}</p>
 
                                 <div className="actions">

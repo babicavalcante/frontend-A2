@@ -39,6 +39,8 @@ export default function Page() {
                                 <img src={item.foto} alt={`${item.nome} foto`} />
                                 <h3>{item.nome}</h3>
                                 <p><strong>Descrição:</strong> {item.descricao}</p>
+                                <p><strong>Email:</strong> {item.email}</p>
+                                <p><strong>Telefone:</strong> {item.telefone}</p>
 
                                 <div className="actions">
                                     <Link href={`/designers/form/${item.id}`}>

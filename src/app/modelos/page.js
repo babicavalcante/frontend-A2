@@ -38,7 +38,6 @@ export default function Page() {
                             <div key={item.id} className="card">
                                 <img src={item.foto} alt={`${item.nome} foto`} className="card-img" />
                                 <h3>{item.nome}</h3>
-                                <p><strong>Data de Nascimento:</strong> {item.data}</p>
                                 <p><strong>Altura:</strong> {item.altura} cm</p>
                                 <p><strong>Telefone:</strong> {item.telefone}</p>
                                 <p><strong>Email:</strong> {item.email}</p>
