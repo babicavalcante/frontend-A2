@@ -22,22 +22,23 @@ export default function Page() {
         categoria: '',
         tamanho: '',
         cor: '',
-        preco: ''
+        preco: '',
+        foto: ''
     });
     const [marcas, setMarcas] = useState([]); // Estado para armazenar as marcas
 
-    // Lista de categorias
-    const categorias = ["Roupas", "Sapatos", "Acessórios"];
+    // Lista de categorias, agora com a categoria "Bolsa"
+    const categorias = ["Roupas", "Sapatos", "Acessórios", "Bolsa"];
     
     // Tamanhos de roupas e numeração de sapato
-    const tamanhosRoupas = ["PP","P", "M", "G", "GG"];
+    const tamanhosRoupas = ["PP", "P", "M", "G", "GG"];
     const numeracaoSapatos = ["33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43"];
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const pecas = JSON.parse(localStorage.getItem('pecas')) || [];
             const dados = pecas.find(item => item.id == params.id); // Procura pela peça com o id correspondente
-            setPeca(dados || { nome: '', marcas: '', categoria: '', tamanho: '', cor: '', preco: '' });
+            setPeca(dados || { nome: '', marcas: '', categoria: '', tamanho: '', cor: '', preco: '', foto: '' });
 
             const marcas = JSON.parse(localStorage.getItem('marcas')) || []; // Carrega as marcas do localStorage
             setMarcas(marcas);
@@ -69,6 +70,19 @@ export default function Page() {
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ".") // Adiciona pontos a cada 3 dígitos
             .replace(",", "."); // Garante a vírgula como separador de decimal
+    };
+
+    // Função para tratar o upload da foto
+    const handleFileChange = (e, setFieldValue) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // Armazena a imagem como uma URL base64
+                setFieldValue('foto', reader.result);
+            };
+            reader.readAsDataURL(file); // Lê o arquivo como URL base64
+        }
     };
 
     return (
@@ -143,9 +157,9 @@ export default function Page() {
                                     onChange={handleChange}
                                     isInvalid={errors.categoria}
                                 >
-                                    <option value="">Selecione a categoria</option>
-                                    {categorias.map((categoria, index) => (
-                                        <option key={index} value={categoria}>
+                                    <option value="">Selecione</option>
+                                    {categorias.map((categoria) => (
+                                        <option key={categoria} value={categoria}>
                                             {categoria}
                                         </option>
                                     ))}
@@ -162,19 +176,19 @@ export default function Page() {
                                     onChange={handleChange}
                                     isInvalid={errors.tamanho}
                                 >
-                                    <option value="">Selecione o tamanho</option>
-                                    {values.categoria === "Roupas" &&
-                                        tamanhosRoupas.map((tamanho, index) => (
-                                            <option key={index} value={tamanho}>
+                                    <option value="">Selecione</option>
+                                    {values.categoria === "Roupas" ?
+                                        tamanhosRoupas.map((tamanho) => (
+                                            <option key={tamanho} value={tamanho}>
                                                 {tamanho}
                                             </option>
-                                        ))}
-                                    {values.categoria === "Sapatos" &&
-                                        numeracaoSapatos.map((numero, index) => (
-                                            <option key={index} value={numero}>
-                                                {numero}
-                                            </option>
-                                        ))}
+                                        )) :
+                                        values.categoria === "Sapatos" ?
+                                            numeracaoSapatos.map((numero) => (
+                                                <option key={numero} value={numero}>
+                                                    {numero}
+                                                </option>
+                                            )) : null}
                                 </Form.Select>
                                 <div className="text-danger">{errors.tamanho}</div>
                             </Form.Group>
@@ -201,10 +215,14 @@ export default function Page() {
                                 <Form.Control
                                     type="text"
                                     name="preco"
-                                    value={values.preco ? `R$ ${formatarPreco(values.preco)}` : ''}
+                                    value={values.preco ? `R$ ${formatarPreco(values.preco)}` : 'R$ 0,00'}
                                     onChange={e => {
-                                        const rawValue = e.target.value.replace(/[^\d]/g, ''); // Remove não números
-                                        const numericValue = rawValue ? parseFloat(rawValue) / 100 : 0;
+                                        let rawValue = e.target.value.replace(/[^\d,]/g, ''); // Remove qualquer coisa que não seja número ou vírgula
+                                        // Se houver vírgula, substitua por ponto para manipulação de valores numéricos
+                                        if (rawValue.includes(',')) {
+                                            rawValue = rawValue.replace(',', '.');
+                                        }
+                                        const numericValue = rawValue ? parseFloat(rawValue) : 0;  // Garantir que seja um número, mesmo que 0
                                         setFieldValue('preco', numericValue);
                                     }}
                                     isInvalid={errors.preco}
@@ -212,17 +230,15 @@ export default function Page() {
                                 <div className="text-danger">{errors.preco}</div>
                             </Form.Group>
 
-                            {/* Foto (URL) */}
+                            {/* Foto (Upload ou URL) */}
                             <Form.Group className="mb-3" controlId="foto">
-                                <Form.Label>Foto (URL)</Form.Label>
+                                <Form.Label>Foto (URL ou Upload)</Form.Label>
                                 <Form.Control
-                                    type="text"
-                                    name="foto"
-                                    value={values.foto}
-                                    onChange={handleChange}
+                                    type="file"
+                                    onChange={(e) => handleFileChange(e, setFieldValue)}
                                     isInvalid={errors.foto}
-                                    style={{ borderColor: errors.foto ? '#dc3545' : '#ced4da' }}
                                 />
+                                {values.foto && <div><img src={values.foto} alt="Preview" style={{ maxWidth: '100px', marginTop: '10px' }} /></div>} {/* Exibe a foto em preview */}
                                 <div className="text-danger">{errors.foto}</div>
                             </Form.Group>
 
