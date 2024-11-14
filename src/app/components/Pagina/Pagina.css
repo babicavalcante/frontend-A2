@@ -106,7 +106,7 @@
 /* Modo Escuro (ativado por .night-mode) */
 body.night-mode {
   background-color: #121212;
-  color: #f0f0f0;
+  color: #696969;
 }
 
 body.night-mode .navbar-custom {
