@@ -11,22 +11,37 @@ import { FaCheck } from "react-icons/fa";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { mask } from "remask";
 import { v4 } from "uuid";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";  // Importando o CSS do react-datepicker
 
 export default function Page({ params }) {
     const route = useRouter();
-
     const [modelos, setModelos] = useState([]); // Adicionando estado para modelos
     const [pecas, setPecas] = useState([]);
-
-    const dados = modelos.find(item => item.id == params.id);
-    const modelo = dados || { nome: '', data: '', altura: '', telefone: '', email: '', peca: '', foto: '' };
+    const [modelo, setModelo] = useState({
+        nome: '',
+        data: '',
+        altura: '',
+        telefone: '',
+        email: '',
+        peca: '',
+        foto: ''
+    });
 
     // Carregar os modelos e peças para o seletor
     useEffect(() => {
         const storedModelos = JSON.parse(localStorage.getItem('modelos')) || [];
         setModelos(storedModelos);
         setPecas(JSON.parse(localStorage.getItem('pecas')) || []);
-    }, []);
+
+        // Verifica se o parâmetro 'id' foi passado e carrega o modelo correspondente
+        if (params.id) {
+            const modeloExistente = storedModelos.find(item => item.id === params.id);
+            if (modeloExistente) {
+                setModelo(modeloExistente);
+            }
+        }
+    }, [params.id]);  // A dependência agora garante que a página será atualizada quando 'id' mudar
 
     // Função para salvar ou atualizar o modelo
     function salvar(dados) {
@@ -54,6 +69,7 @@ export default function Page({ params }) {
     return (
         <Pagina titulo="Modelos">
             <Formik
+                enableReinitialize // Permite que o Formik atualize os valores iniciais ao carregar as informações
                 initialValues={modelo}
                 validationSchema={ModeloValidator}
                 onSubmit={values => salvar(values)}
@@ -70,6 +86,14 @@ export default function Page({ params }) {
                     useEffect(() => {
                         setFieldValue('telefone', mask(values.telefone, '(99) 99999-9999'));
                     }, [values.telefone]);
+
+                    // Função para lidar com a escolha de arquivo de foto
+                    const handleFileChange = (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            setFieldValue("foto", URL.createObjectURL(file)); // Armazenando a URL local da imagem
+                        }
+                    };
 
                     return (
                         <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }} onSubmit={handleSubmit}>
@@ -88,15 +112,20 @@ export default function Page({ params }) {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Novo campo com React DatePicker */}
                             <Form.Group className="mb-3" controlId="data">
                                 <Form.Label>Data de Nascimento</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="data"
-                                    value={values.data}
-                                    onChange={handleChange}
-                                    isInvalid={errors.data}
-                                    style={{ borderColor: errors.data ? '#dc3545' : '#ced4da' }}
+                                <DatePicker
+                                    selected={values.data ? new Date(values.data) : null} // Formatação da data
+                                    onChange={(date) => setFieldValue("data", date)} // Atualiza o valor de data no Formik
+                                    dateFormat="dd/MM/yyyy" // Formato da data
+                                    className={`form-control ${errors.data ? 'is-invalid' : ''}`} // Classe para erro
+                                    placeholderText="Escolha a data"
+                                    showYearDropdown // Mostra o dropdown para ano
+                                    scrollableMonthYearDropdown // Permite rolar entre os anos
+                                    yearDropdownItemNumber={15} // Limita o número de anos visíveis
+                                    minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 100))} // Data mínima (100 anos atrás)
+                                    maxDate={new Date()} // Data máxima (hoje)
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     {errors.data}
@@ -104,7 +133,7 @@ export default function Page({ params }) {
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="altura">
-                                <Form.Label>Altura</Form.Label>
+                                <Form.Label>Altura (em cm)</Form.Label>
                                 <Form.Control
                                     type="number"
                                     name="altura"
@@ -162,18 +191,28 @@ export default function Page({ params }) {
                                 <Form.Control.Feedback type="invalid">{errors.peca}</Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Foto (Upload de arquivo) */}
                             <Form.Group className="mb-3" controlId="foto">
-                                <Form.Label>Foto (URL)</Form.Label>
+                                <Form.Label>Foto</Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    type="file"
                                     name="foto"
-                                    value={values.foto}
-                                    onChange={handleChange}
+                                    onChange={handleFileChange}
                                     isInvalid={errors.foto}
-                                    style={{ borderColor: errors.foto ? '#dc3545' : '#ced4da' }}
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.foto}</Form.Control.Feedback>
                             </Form.Group>
+
+                            {/* Exibir a imagem prévia selecionada */}
+                            {values.foto && (
+                                <div className="mb-3">
+                                    <img
+                                        src={values.foto}
+                                        alt="Pré-visualização"
+                                        style={{ maxWidth: '200px', maxHeight: '200px', objectFit: 'cover' }}
+                                    />
+                                </div>
+                            )}
 
                             <div className="text-center">
                                 <Button type="submit" variant="primary" className="me-2">

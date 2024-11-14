@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 
 import Pagina from "@/app/components/Pagina/Pagina";
 import DesfileValidator from "@/app/validators/DesfileValidator";
@@ -19,11 +18,12 @@ export default function Page({ params }) {
 
     const desfiles = JSON.parse(localStorage.getItem('desfiles')) || []
     const dados = desfiles.find(item => item.id == params.id)
-    const desfile = dados || { nome: '', marca: '', designer: '', modelo: '', horario: '', data: '' }
+    const desfile = dados || { nome: '', marca: '', designer: '', modelo: '', horario: '', data: '', descricao: '' }
 
     const [marcas, setMarcas] = useState([]);
     const [designers, setDesigners] = useState([]);
     const [modelos, setModelos] = useState([]);
+    const [cartaz, setCartaz] = useState(null); // Estado para armazenar a imagem do cartaz
 
     useEffect(() => {
         setMarcas(JSON.parse(localStorage.getItem('marcas')) || []);
@@ -32,21 +32,36 @@ export default function Page({ params }) {
     }, []);
 
     function salvar(dados) {
-
-        if (desfile.id) {
-            Object.assign(desfile, dados)
-        } else {
-            dados.id = v4()
-            desfiles.push(dados)
+        // Se o cartaz foi alterado, salva a imagem
+        if (cartaz) {
+            dados.cartaz = cartaz;
         }
 
-        localStorage.setItem('desfiles', JSON.stringify(desfiles))
-        return route.push('/desfiles')
+        if (desfile.id) {
+            Object.assign(desfile, dados);
+        } else {
+            dados.id = v4();
+            desfiles.push(dados);
+        }
+
+        localStorage.setItem('desfiles', JSON.stringify(desfiles));
+        return route.push('/desfiles');
     }
+
+    // Função para lidar com o upload da imagem
+    const handleCartazChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setCartaz(reader.result); // Define o cartaz como a URL da imagem
+            };
+            reader.readAsDataURL(file); // Lê a imagem como URL
+        }
+    };
 
     return (
         <Pagina titulo="Desfiles">
-
             <Formik
                 initialValues={desfile}
                 validationSchema={DesfileValidator}
@@ -81,6 +96,7 @@ export default function Page({ params }) {
                                     {errors.nome}
                                 </Form.Control.Feedback>
                             </Form.Group>
+
                             <Form.Group className="mb-3" controlId="marca">
                                 <Form.Label>Marca</Form.Label>
                                 <Form.Select
@@ -98,6 +114,7 @@ export default function Page({ params }) {
                                 </Form.Select>
                                 <div className="text-danger">{errors.marca}</div>
                             </Form.Group>
+
                             <Form.Group className="mb-3" controlId="designer">
                                 <Form.Label>Designer</Form.Label>
                                 <Form.Select
@@ -115,6 +132,7 @@ export default function Page({ params }) {
                                 </Form.Select>
                                 <div className="text-danger">{errors.designer}</div>
                             </Form.Group>
+
                             <Form.Group className="mb-3" controlId="modelo">
                                 <Form.Label>Modelo</Form.Label>
                                 <Form.Select
@@ -132,6 +150,7 @@ export default function Page({ params }) {
                                 </Form.Select>
                                 <div className="text-danger">{errors.modelo}</div>
                             </Form.Group>
+
                             <Form.Group className="mb-3" controlId="horario">
                                 <Form.Label>Horário</Form.Label>
                                 <Form.Control
@@ -144,6 +163,7 @@ export default function Page({ params }) {
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.horario}</Form.Control.Feedback>
                             </Form.Group>
+
                             <Form.Group className="mb-3" controlId="data">
                                 <Form.Label>Data</Form.Label>
                                 <Form.Control
@@ -156,18 +176,37 @@ export default function Page({ params }) {
                                 <div className="text-danger">{errors.data}</div>
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="cartaz">
-                                <Form.Label>Cartaz (URL)</Form.Label>
+                            <Form.Group className="mb-3" controlId="descricao">
+                                <Form.Label>Descrição</Form.Label>
                                 <Form.Control
-                                    type="text"
-                                    name="cartaz"
-                                    value={values.cartaz}
+                                    as="textarea"
+                                    rows={3}
+                                    name="descricao"
+                                    value={values.descricao}
                                     onChange={handleChange}
+                                    isInvalid={errors.descricao}
+                                    style={{ borderColor: errors.descricao ? '#dc3545' : '#ced4da' }}
+                                />
+                                <div className="text-danger">{errors.descricao}</div>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="cartaz">
+                                <Form.Label>Cartaz (Imagem)</Form.Label>
+                                <Form.Control
+                                    type="file"
+                                    name="cartaz"
+                                    onChange={handleCartazChange}
                                     isInvalid={errors.cartaz}
-                                    style={{ borderColor: errors.cartaz ? '#dc3545' : '#ced4da' }}
                                 />
                                 <div className="text-danger">{errors.cartaz}</div>
                             </Form.Group> 
+
+                            {/* Se houver uma imagem carregada, exibe ela */}
+                            {cartaz && (
+                                <div className="mb-3">
+                                    <img src={cartaz} alt="Cartaz" style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' }} />
+                                </div>
+                            )}
 
                             <div className="text-center">
                                 <Button onClick={handleSubmit} variant="success">

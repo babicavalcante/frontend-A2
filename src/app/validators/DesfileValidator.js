@@ -12,17 +12,25 @@ const DesfileValidator = Yup.object().shape({
   designer: Yup.string()
     .required('O nome do designer é obrigatório.'),
 
+  modelo: Yup.string()
+    .required('O modelo é obrigatório.'),
+
   horario: Yup.string()
     .required('O horário é obrigatório.')
-    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Horário inválido. Use o formato HH:MM.'),
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Horário inválido. Use o formato HH:MM.')
+    .test('valid-time', 'O horário não pode ser igual ou superior a 24:00', value => {
+        const [hours, minutes] = value.split(':').map(Number);
+        return hours < 24;
+    }),
 
   data: Yup.string()
     .required('A data é obrigatória.')
-    .matches(/^\d{4}-\d{2}-\d{2}$/, 'Data inválida. Use o formato YYYY-MM-DD.')
     .test('is-future', 'A data deve ser no futuro.', (value) => {
       const today = new Date();
       return new Date(value) > today;
-    })
+    }),
+
+  descricao: Yup.string().required('A descrição é obrigatória.')
 });
 
 export default DesfileValidator;
