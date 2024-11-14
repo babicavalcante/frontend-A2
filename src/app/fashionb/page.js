@@ -192,7 +192,6 @@ export default function FashionB() {
             {modalContent?.designer && <p><strong>Designer:</strong> {modalContent.designer}</p>}
             {modalContent?.data && <p><strong>Data:</strong> {modalContent.data}</p>}
             {modalContent?.horario && <p><strong>Horário:</strong> {modalContent.horario}</p>}
-            {modalContent?.descricao && <p><strong>Descrição</strong> {modalContent.descricao}</p>}
 
             {modalContent?.fundador && <p><strong>Fundador:</strong> {modalContent.fundador}</p>}
             {modalContent?.preco && <p><strong>Preço:</strong> {modalContent.preco}</p>}
