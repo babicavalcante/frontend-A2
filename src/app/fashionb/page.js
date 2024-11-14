@@ -16,18 +16,18 @@ const modelos = [
 const destaques = [
   {
     id: 1,
-    nome: "Alta Costura 2023/2024",
-    foto: "https://static.stealthelook.com.br/wp-content/uploads/2023/01/alta-costura-20232024-capa-20230117193354.jpg",
+    nome: "Yves Saint Laurent",
+    foto: "https://s2-marieclaire.glbimg.com/U7vGrmSkta-Rl9Lnsnsh99EDeGI=/0x0:1172x659/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_51f0194726ca4cae994c33379977582d/internal_photos/bs/2024/r/z/nNggWJSe6uknsSerRemA/saint.jpg",
   },
   {
     id: 2,
     nome: "Victoria's Secret Fashion Show 2024",
-    foto: "https://www.billboard.com/wp-content/uploads/2024/10/gigi-hadid-victorias-secret-fashion-show-2024-billboard-1548.jpg?w=1024"
+    foto: "https://conteudo.imguol.com.br/c/entretenimento/16/2024/10/15/gigi-hadid-abriu-o-victorias-secret-fashion-show-2024-ao-fundo-telao-exibia-estamos-de-volta-1729037103098_v2_900x506.jpg"
   },
   {
     id: 3,
-    nome: "Schiaparelli Fall 2024 Couture",
-    foto: "https://images.elle.com.br/2024/06/00021-schiaparelli-fall-2024-couture-credit-brand-1240x1680.webp"
+    nome: "Schiaparelli 2024 Couture",
+    foto: "https://pbs.twimg.com/media/GYbjBj9b0AASGY_.jpg:large"
   }
 ];
 
