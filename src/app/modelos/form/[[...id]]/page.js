@@ -4,73 +4,75 @@ import Pagina from "@/app/components/Pagina/Pagina";
 import ModeloValidator from "@/app/validators/ModeloValidator";
 import { Formik } from "formik";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FaCheck } from "react-icons/fa";
 import { MdOutlineArrowBack } from "react-icons/md";
-import { mask } from "remask";
 import { v4 } from "uuid";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Importando o CSS do react-datepicker
+import { mask } from "remask";
+import "react-datepicker/dist/react-datepicker.css"; // Para o estilo do calendário
 
-export default function Page({ params }) {
+export default function Page() {
     const route = useRouter();
-    const [modelos, setModelos] = useState([]); // Adicionando estado para modelos
-    const [pecas, setPecas] = useState([]);
+    const params = useParams();
+
     const [modelo, setModelo] = useState({
-        nome: '',
-        altura: '',
-        telefone: '',
-        email: '',
-        peca: '',
-        foto: ''
+        nome: '', altura: '', idade: '', desfile: '', telefone: '', email: '', peca: '', foto: ''
     });
+    const [pecas, setPecas] = useState([]);
+    const [desfiles, setDesfiles] = useState([]);
 
-    // Carregar os modelos e peças para o seletor
     useEffect(() => {
-        const storedModelos = JSON.parse(localStorage.getItem('modelos')) || [];
-        setModelos(storedModelos);
-        setPecas(JSON.parse(localStorage.getItem('pecas')) || []);
-
-        // Verifica se o parâmetro 'id' foi passado e carrega o modelo correspondente
-        if (params.id) {
-            const modeloExistente = storedModelos.find(item => item.id === params.id);
-            if (modeloExistente) {
-                setModelo(modeloExistente); // Carrega os dados do modelo para edição
-            }
+        // Carrega dados do modelo se estiver editando
+        if (typeof window !== 'undefined') {
+            const modelos = JSON.parse(localStorage.getItem('modelos')) || [];
+            const dados = modelos.find(item => item.id === params.id);
+            setModelo(dados || { nome: '', altura: '', idade: '', telefone: '', email: '', peca: '', foto: '' });
         }
-    }, [params.id]); // A dependência agora garante que a página será atualizada quando 'id' mudar
 
-    // Função para salvar ou atualizar o modelo
+        // Carrega os desfiles e peças de roupa do localStorage
+        setPecas(JSON.parse(localStorage.getItem('pecas')) || []);
+        setDesfiles(JSON.parse(localStorage.getItem('desfiles')) || []);
+    }, [params.id]);
+
+    // Função para salvar as alterações
     function salvar(dados) {
-        const updatedModelos = [...modelos];
+        const modelos = JSON.parse(localStorage.getItem('modelos')) || [];
+
         if (modelo.id) {
-            // Atualiza o modelo existente
-            const index = updatedModelos.findIndex(item => item.id === modelo.id);
+            const index = modelos.findIndex(item => item.id === modelo.id);
             if (index !== -1) {
-                updatedModelos[index] = { ...updatedModelos[index], ...dados };
+                modelos[index] = { ...modelos[index], ...dados };
             }
         } else {
-            // Cria um novo modelo
-            dados.id = v4(); // Gerar um ID único para o novo modelo
-            updatedModelos.push(dados);
+            dados.id = v4(); // Gerar ID único para novo modelo
+            modelos.push(dados);
         }
 
-        // Atualiza o estado e o localStorage
-        setModelos(updatedModelos);
-        localStorage.setItem('modelos', JSON.stringify(updatedModelos));
-
-        // Aguarda 100ms antes de redirecionar (para garantir que o localStorage foi atualizado)
-        setTimeout(() => route.push('/modelos'), 100);
+        localStorage.setItem('modelos', JSON.stringify(modelos));
+        route.push('/modelos');
     }
+
+    // Função para upload da foto
+    const handleFotoUpload = (e, setFieldValue) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const fotoUrl = URL.createObjectURL(file); // Cria URL temporária da imagem
+                setFieldValue("foto", fotoUrl); // Salva a URL no formulário
+            };
+            reader.readAsDataURL(file); // Lê o arquivo como base64, se necessário
+        }
+    };
 
     return (
         <Pagina titulo="Modelos">
             <Formik
-                enableReinitialize // Permite que o Formik atualize os valores iniciais ao carregar as informações
                 initialValues={modelo}
                 validationSchema={ModeloValidator}
+                enableReinitialize
                 onSubmit={values => salvar(values)}
             >
                 {({
@@ -80,33 +82,13 @@ export default function Page({ params }) {
                     errors,
                     setFieldValue,
                 }) => {
-
-                    // Mascara para o campo de telefone
                     useEffect(() => {
                         setFieldValue('telefone', mask(values.telefone, '(99) 99999-9999'));
                     }, [values.telefone]);
 
-                    // Função para lidar com a escolha de arquivo de foto
-                    const handleFileChange = (e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                            setFieldValue("foto", URL.createObjectURL(file)); // Armazenando a URL local da imagem
-                        }
-                    };
-
-                    // Corrigir o formato da data (ao exibir no DatePicker)
-                    const formatDate = (date) => {
-                        return date ? new Date(date) : null; // Convertendo para objeto Date
-                    };
-
-                    // Formatar a data antes de salvar
-                    const handleSave = (values) => {
-                        const formattedValues = { ...values, data: values.data.toISOString() };
-                        salvar(formattedValues);
-                    };
-
                     return (
-                        <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }} onSubmit={handleSubmit}>
+                        <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }}>
+                            {/* Campo Nome */}
                             <Form.Group className="mb-3" controlId="nome">
                                 <Form.Label>Nome Completo</Form.Label>
                                 <Form.Control
@@ -115,13 +97,11 @@ export default function Page({ params }) {
                                     value={values.nome}
                                     onChange={handleChange}
                                     isInvalid={errors.nome}
-                                    style={{ borderColor: errors.nome ? '#dc3545' : '#ced4da' }}
                                 />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.nome}
-                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">{errors.nome}</Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Campo Altura */}
                             <Form.Group className="mb-3" controlId="altura">
                                 <Form.Label>Altura (em cm)</Form.Label>
                                 <Form.Control
@@ -130,13 +110,43 @@ export default function Page({ params }) {
                                     value={values.altura}
                                     onChange={handleChange}
                                     isInvalid={errors.altura}
-                                    style={{ borderColor: errors.altura ? '#dc3545' : '#ced4da' }}
                                 />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.altura}
-                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">{errors.altura}</Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Campo Idade */}
+                            <Form.Group className="mb-3" controlId="idade">
+                                <Form.Label>Idade</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="idade"
+                                    value={values.idade}
+                                    onChange={handleChange}
+                                    isInvalid={errors.idade}
+                                />
+                                <Form.Control.Feedback type="invalid">{errors.idade}</Form.Control.Feedback>
+                            </Form.Group>
+
+                            {/* Seletor de Desfile */}
+                            <Form.Group className="mb-3" controlId="desfile">
+                                <Form.Label>Desfile</Form.Label>
+                                <Form.Select
+                                    name="desfile"
+                                    value={values.desfile}
+                                    onChange={handleChange}
+                                    isInvalid={errors.desfile}
+                                >
+                                    <option value="">Selecione</option>
+                                    {desfiles.map(item => (
+                                        <option key={item.nome} value={item.nome}>
+                                            {item.nome}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                                <Form.Control.Feedback type="invalid">{errors.desfile}</Form.Control.Feedback>
+                            </Form.Group>
+
+                            {/* Campo Telefone */}
                             <Form.Group className="mb-3" controlId="telefone">
                                 <Form.Label>Telefone</Form.Label>
                                 <Form.Control
@@ -145,11 +155,11 @@ export default function Page({ params }) {
                                     value={values.telefone}
                                     onChange={(e) => setFieldValue('telefone', mask(e.target.value, '(99) 99999-9999'))}
                                     isInvalid={errors.telefone}
-                                    style={{ borderColor: errors.telefone ? '#dc3545' : '#ced4da' }}
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.telefone}</Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Campo E-mail */}
                             <Form.Group className="mb-3" controlId="email">
                                 <Form.Label>E-mail</Form.Label>
                                 <Form.Control
@@ -158,11 +168,11 @@ export default function Page({ params }) {
                                     value={values.email}
                                     onChange={handleChange}
                                     isInvalid={errors.email}
-                                    style={{ borderColor: errors.email ? '#dc3545' : '#ced4da' }}
                                 />
                                 <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Seletor de Peça */}
                             <Form.Group className="mb-3" controlId="peca">
                                 <Form.Label>Peça de Roupa</Form.Label>
                                 <Form.Select
@@ -181,28 +191,28 @@ export default function Page({ params }) {
                                 <Form.Control.Feedback type="invalid">{errors.peca}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Foto (Upload de arquivo) */}
+                            {/* Campo Foto (Upload) */}
                             <Form.Group className="mb-3" controlId="foto">
                                 <Form.Label>Foto</Form.Label>
                                 <Form.Control
                                     type="file"
-                                    accept="image/*"
-                                    onChange={handleFileChange}
+                                    name="foto"
+                                    onChange={(e) => handleFotoUpload(e, setFieldValue)}
                                     isInvalid={errors.foto}
-                                    style={{ borderColor: errors.foto ? '#dc3545' : '#ced4da' }}
                                 />
                                 {values.foto && (
                                     <img
                                         src={values.foto}
-                                        alt="Pré-visualização"
-                                        style={{ maxWidth: '200px', maxHeight: '200px', objectFit: 'cover' }}
+                                        alt="Foto do Modelo"
+                                        style={{ width: "100px", marginTop: "10px" }}
                                     />
                                 )}
                                 <Form.Control.Feedback type="invalid">{errors.foto}</Form.Control.Feedback>
                             </Form.Group>
 
+                            {/* Botões */}
                             <div className="text-center">
-                                <Button type="submit" variant="primary" className="me-2">
+                                <Button onClick={handleSubmit} variant="primary" className="me-2">
                                     <FaCheck /> Salvar
                                 </Button>
                                 <Link href="/modelos" className="btn btn-secondary">
