@@ -48,9 +48,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 380px; /* Tamanho fixo do card */
+    min-height: 380px; /* Ajusta a altura mínima do card para que o conteúdo caiba */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Para garantir que os ícones não saiam do limite do card */
+    position: relative;
 }
 
 /* Efeito de hover nos cards */
@@ -73,6 +73,7 @@
     font-size: 1.25rem;
     color: #333;
     margin-bottom: 10px;
+    text-align: center; /* Centraliza o título */
 }
 
 /* Detalhes da marca (descrição) */
@@ -87,11 +88,13 @@
 /* Botões de Ação (Editar e Excluir) */
 .card .actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center; /* Alinha os ícones verticalmente */
     margin-top: 15px;
+    gap: 10px; /* Espaço entre os ícones */
 }
 
+/* Botões de Ação */
 .card .actions a, .card .actions button {
     font-size: 1.25rem;
     color: #007bff; /* Cor dos ícones */
@@ -106,9 +109,9 @@
     height: 40px; /* Tamanho fixo para os botões */
     border-radius: 50%; /* Botões circulares */
     background-color: #f0f0f0; /* Cor de fundo para os botões */
-    margin: 0 5px;
 }
 
+/* Efeito de hover nos ícones */
 .card .actions a:hover, .card .actions button:hover {
     color: #dbadbe; /* Cor rosa para o hover */
     background-color: #e5a8b8; /* Cor de fundo ao passar o mouse */

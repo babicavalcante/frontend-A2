@@ -23,7 +23,8 @@ export default function Page() {
         tamanho: '',
         cor: '',
         preco: '',
-        foto: ''
+        foto: '',
+        descricao: ''
     });
     const [marcas, setMarcas] = useState([]); // Estado para armazenar as marcas
 
@@ -228,6 +229,19 @@ export default function Page() {
                                     isInvalid={errors.preco}
                                 />
                                 <div className="text-danger">{errors.preco}</div>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="descricao">
+                                <Form.Label>Descrição</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    name="descricao"
+                                    value={values.descricao}
+                                    onChange={handleChange}
+                                    isInvalid={errors.descricao}
+                                />
+                                <div className="text-danger">{errors.descricao}</div>
                             </Form.Group>
 
                             {/* Foto (Upload ou URL) */}

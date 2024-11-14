@@ -18,17 +18,15 @@ export default function Page({ params }) {
 
     const desfiles = JSON.parse(localStorage.getItem('desfiles')) || []
     const dados = desfiles.find(item => item.id == params.id)
-    const desfile = dados || { nome: '', marca: '', designer: '', modelo: '', horario: '', data: '', descricao: '' }
+    const desfile = dados || { nome: '', marca: '', designer: '', horario: '', data: '', descricao: '' }
 
     const [marcas, setMarcas] = useState([]);
     const [designers, setDesigners] = useState([]);
-    const [modelos, setModelos] = useState([]);
     const [cartaz, setCartaz] = useState(null); // Estado para armazenar a imagem do cartaz
 
     useEffect(() => {
         setMarcas(JSON.parse(localStorage.getItem('marcas')) || []);
         setDesigners(JSON.parse(localStorage.getItem('designers')) || []);
-        setModelos(JSON.parse(localStorage.getItem('modelos')) || []);
     }, []);
 
     function salvar(dados) {
@@ -131,24 +129,6 @@ export default function Page({ params }) {
                                     ))}
                                 </Form.Select>
                                 <div className="text-danger">{errors.designer}</div>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="modelo">
-                                <Form.Label>Modelo</Form.Label>
-                                <Form.Select
-                                    name="modelo"
-                                    value={values.modelo}
-                                    onChange={handleChange}
-                                    isInvalid={errors.modelo}
-                                >
-                                    <option value=''>Selecione</option>
-                                    {modelos.map(item => (
-                                        <option key={item.nome} value={item.nome}>
-                                            {item.nome}
-                                        </option>
-                                    ))}
-                                </Form.Select>
-                                <div className="text-danger">{errors.modelo}</div>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="horario">

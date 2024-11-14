@@ -7,9 +7,9 @@ import './fashionb.css'; // Importando o arquivo de estilos
 
 // Simulando os dados para "modelos" e "destaques"
 const modelos = [
-  { id: 1, nome: "Modelo 1", foto: "/img/modelo1.jpg", descricao: "Descrição do Modelo 1" },
-  { id: 2, nome: "Modelo 2", foto: "/img/modelo2.jpg", descricao: "Descrição do Modelo 2" },
-  { id: 3, nome: "Modelo 3", foto: "/img/modelo3.jpg", descricao: "Descrição do Modelo 3" },
+  { id: 1, nome: "Bella Hadid", foto: "https://i.pinimg.com/236x/65/62/e2/6562e2d47b531e360953687cebe023a0.jpg"},
+  { id: 2, nome: "Candice Swanepoell", foto: "https://images.bursadabugun.com/galeriler/2021/12/13/80667-candice-swanepoel-miami-sahillerinde-boy-gosterdi-61b701dd0f523.jpg"},
+  { id: 3, nome: "Adriana Lima", foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiWO0zQNhqLt3DB_aTKrhyXK7_Ts55vxouyA&s"},
 ];
 
 // Lista de imagens de destaque

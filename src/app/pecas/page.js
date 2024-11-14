@@ -43,6 +43,7 @@ export default function Page() {
                                 <p><strong>Tamanho:</strong> {item.tamanho}</p>
                                 <p><strong>Cor:</strong> {item.cor}</p>
                                 <p><strong>Preço:</strong> R$ {item.preco.toFixed(2).replace('.', ',')}</p>
+                                <p><strong>Descrição:</strong> {item.descricao}</p>
 
                                 <div className="actions">
                                     <Link href={`/pecas/form/${item.id}`}>
