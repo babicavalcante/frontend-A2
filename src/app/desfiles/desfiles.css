@@ -25,7 +25,8 @@
 
 .card img {
     width: 100%;
-    height: auto;
+    height: 200px;  /* Definindo a altura fixa das imagens */
+    object-fit: cover;  /* As imagens ficam proporcionais e sem distorção */
     border-radius: 8px;
     margin-bottom: 15px;
 }
