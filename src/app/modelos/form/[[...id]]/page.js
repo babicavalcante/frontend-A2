@@ -11,7 +11,8 @@ import { FaCheck } from "react-icons/fa";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { v4 } from "uuid";
 import { mask } from "remask";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css"; 
+
 export default function Page() {
     const route = useRouter();
     const params = useParams();
