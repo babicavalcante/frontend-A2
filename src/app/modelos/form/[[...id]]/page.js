@@ -11,8 +11,7 @@ import { FaCheck } from "react-icons/fa";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { v4 } from "uuid";
 import { mask } from "remask";
-import "react-datepicker/dist/react-datepicker.css"; // Para o estilo do calendário
-
+import "react-datepicker/dist/react-datepicker.css";
 export default function Page() {
     const route = useRouter();
     const params = useParams();
@@ -24,19 +23,16 @@ export default function Page() {
     const [desfiles, setDesfiles] = useState([]);
 
     useEffect(() => {
-        // Carrega dados do modelo se estiver editando
         if (typeof window !== 'undefined') {
             const modelos = JSON.parse(localStorage.getItem('modelos')) || [];
             const dados = modelos.find(item => item.id === params.id);
             setModelo(dados || { nome: '', altura: '', idade: '', telefone: '', email: '', peca: '', foto: '' });
         }
 
-        // Carrega os desfiles e peças de roupa do localStorage
         setPecas(JSON.parse(localStorage.getItem('pecas')) || []);
         setDesfiles(JSON.parse(localStorage.getItem('desfiles')) || []);
     }, [params.id]);
 
-    // Função para salvar as alterações
     function salvar(dados) {
         const modelos = JSON.parse(localStorage.getItem('modelos')) || [];
 
@@ -46,7 +42,7 @@ export default function Page() {
                 modelos[index] = { ...modelos[index], ...dados };
             }
         } else {
-            dados.id = v4(); // Gerar ID único para novo modelo
+            dados.id = v4(); 
             modelos.push(dados);
         }
 
@@ -54,16 +50,16 @@ export default function Page() {
         route.push('/modelos');
     }
 
-    // Função para upload da foto
+    // upload da foto
     const handleFotoUpload = (e, setFieldValue) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                const fotoUrl = URL.createObjectURL(file); // Cria URL temporária da imagem
-                setFieldValue("foto", fotoUrl); // Salva a URL no formulário
+                const fotoUrl = URL.createObjectURL(file); 
+                setFieldValue("foto", fotoUrl); 
             };
-            reader.readAsDataURL(file); // Lê o arquivo como base64, se necessário
+            reader.readAsDataURL(file); 
         }
     };
 
@@ -88,7 +84,6 @@ export default function Page() {
 
                     return (
                         <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }}>
-                            {/* Campo Nome */}
                             <Form.Group className="mb-3" controlId="nome">
                                 <Form.Label>Nome Completo</Form.Label>
                                 <Form.Control
@@ -101,7 +96,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.nome}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Campo Altura */}
                             <Form.Group className="mb-3" controlId="altura">
                                 <Form.Label>Altura (em cm)</Form.Label>
                                 <Form.Control
@@ -114,7 +108,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.altura}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Campo Idade */}
                             <Form.Group className="mb-3" controlId="idade">
                                 <Form.Label>Idade</Form.Label>
                                 <Form.Control
@@ -127,7 +120,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.idade}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Seletor de Desfile */}
                             <Form.Group className="mb-3" controlId="desfile">
                                 <Form.Label>Desfile</Form.Label>
                                 <Form.Select
@@ -146,7 +138,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.desfile}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Campo Telefone */}
                             <Form.Group className="mb-3" controlId="telefone">
                                 <Form.Label>Telefone</Form.Label>
                                 <Form.Control
@@ -159,7 +150,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.telefone}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Campo E-mail */}
                             <Form.Group className="mb-3" controlId="email">
                                 <Form.Label>E-mail</Form.Label>
                                 <Form.Control
@@ -172,7 +162,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Seletor de Peça */}
                             <Form.Group className="mb-3" controlId="peca">
                                 <Form.Label>Peça de Roupa</Form.Label>
                                 <Form.Select
@@ -191,7 +180,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.peca}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Campo Foto (Upload) */}
                             <Form.Group className="mb-3" controlId="foto">
                                 <Form.Label>Foto</Form.Label>
                                 <Form.Control
@@ -210,7 +198,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.foto}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Botões */}
                             <div className="text-center">
                                 <Button onClick={handleSubmit} variant="primary" className="me-2">
                                     <FaCheck /> Salvar

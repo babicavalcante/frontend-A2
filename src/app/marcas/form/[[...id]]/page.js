@@ -12,34 +12,32 @@ import { MdOutlineArrowBack } from "react-icons/md";
 import { v4 } from "uuid";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Para o estilo do calendário
+import "react-datepicker/dist/react-datepicker.css"; 
 
 export default function Page() {
     const route = useRouter();
     const params = useParams();
 
     const [marca, setMarca] = useState({
-        nome: '', fundador: '', ano_fundacao: '', pais_origem: '', logo: '', descricao: ''  // Adicionando descrição
+        nome: '', fundador: '', ano_fundacao: '', pais_origem: '', logo: '', descricao: ''  
     });
-    const [paisOptions, setPaisOptions] = useState([]); // Lista de países
+    const [paisOptions, setPaisOptions] = useState([]); 
     const [anoSelecionado, setAnoSelecionado] = useState(null);
 
     useEffect(() => {
-        // Carrega dados da marca se estiver editando
         if (typeof window !== 'undefined') {
             const marcas = JSON.parse(localStorage.getItem('marcas')) || [];
             const dados = marcas.find(item => item.id == params.id);
-            setMarca(dados || { nome: '', email: '', telefone: '', pais_origem: '', descricao: '' });  // Incluindo descrição
+            setMarca(dados || { nome: '', email: '', telefone: '', pais_origem: '', descricao: '' });  
         }
 
-        // Busca os países da API
+        // API
         axios.get('https://restcountries.com/v3.1/all')
             .then((response) => {
                 const paises = response.data.map((pais) => ({
                     name: pais.name.common,
                     code: pais.cca2
                 }));
-                // Ordena os países em ordem alfabética
                 paises.sort((a, b) => a.name.localeCompare(b.name));
                 setPaisOptions(paises);
             })
@@ -48,7 +46,6 @@ export default function Page() {
             });
     }, [params.id]);
 
-    // Função para salvar as alterações
     function salvar(dados) {
         const marcas = JSON.parse(localStorage.getItem('marcas')) || [];
 
@@ -66,17 +63,16 @@ export default function Page() {
         route.push('/marcas');
     }
 
-    // Função para upload do logo
+    // upload da logo
     const handleLogoUpload = (e, setFieldValue) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                // Armazena a URL do arquivo no localStorage
-                const logoUrl = URL.createObjectURL(file); // Gera URL temporária
-                setFieldValue("logo", logoUrl); // Salva a URL no formulário
+                const logoUrl = URL.createObjectURL(file);
+                setFieldValue("logo", logoUrl); 
             };
-            reader.readAsDataURL(file); // Lê o arquivo como base64, se necessário
+            reader.readAsDataURL(file); 
         }
     };
 
@@ -96,18 +92,16 @@ export default function Page() {
                     setFieldValue,
                 }) => {
                     useEffect(() => {
-                        // Garantir que ano_fundacao seja um número ou convertido em data válida
                         if (values.ano_fundacao) {
                             const ano = parseInt(values.ano_fundacao);
                             if (!isNaN(ano)) {
-                                setAnoSelecionado(new Date(ano, 0, 1)); // Ajustando para o primeiro dia do ano
+                                setAnoSelecionado(new Date(ano, 0, 1)); 
                             }
                         }
                     }, [values.ano_fundacao]);
 
                     return (
                         <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }}>
-                            {/* Campo Nome */}
                             <Form.Group className="mb-3" controlId="nome">
                                 <Form.Label>Nome</Form.Label>
                                 <Form.Control
@@ -120,7 +114,6 @@ export default function Page() {
                                 <Form.Control.Feedback type="invalid">{errors.nome}</Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Campo Fundador */}
                             <Form.Group className="mb-3" controlId="fundador">
                                 <Form.Label>Fundador</Form.Label>
                                 <Form.Control
@@ -133,7 +126,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.fundador}</div>
                             </Form.Group>
 
-                            {/* Calendário para ano de fundação */}
                             <Form.Group className="mb-3" controlId="ano_fundacao">
                                 <Form.Label>Ano de Fundação</Form.Label>
                                 <DatePicker
@@ -152,7 +144,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.ano_fundacao}</div>
                             </Form.Group>
 
-                            {/* Seletor de País de Origem */}
                             <Form.Group className="mb-3" controlId="pais_origem">
                                 <Form.Label>País de Origem</Form.Label>
                                 <Form.Control
@@ -170,7 +161,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.pais_origem}</div>
                             </Form.Group>
 
-                            {/* Campo Descrição */}
                             <Form.Group className="mb-3" controlId="descricao">
                                 <Form.Label>Descrição</Form.Label>
                                 <Form.Control
@@ -183,7 +173,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.descricao}</div>
                             </Form.Group>
 
-                            {/* Campo Logo (Upload) */}
                             <Form.Group className="mb-3" controlId="logo">
                                 <Form.Label>Logo</Form.Label>
                                 <Form.Control
@@ -196,7 +185,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.logo}</div>
                             </Form.Group>
 
-                            {/* Botões */}
                             <div className="text-center">
                                 <Button onClick={handleSubmit} variant="primary" className="me-2">
                                     <FaCheck /> Salvar

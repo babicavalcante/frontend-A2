@@ -6,7 +6,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Pagina from "../components/Pagina/Pagina";
-import './pecas.css'; // Importando o CSS
+import './pecas.css'; 
 
 export default function Page() {
     const [pecas, setPecas] = useState([]);

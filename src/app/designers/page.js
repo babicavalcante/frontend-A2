@@ -6,7 +6,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Pagina from "../components/Pagina/Pagina";
-import './designers.css'; // Importando o CSS para designers
+import './designers.css'; 
 
 export default function Page() {
     const [designers, setDesigners] = useState([]);

@@ -1,12 +1,11 @@
 // components/Footer.js
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
 import Link from 'next/link';
-import './Footer.css'; // Importando o CSS do Footer
+import './Footer.css'; 
 
 export default function Footer() {
   return (
     <footer className="footer">
-      {/* Seção de Links */}
       <div className="footer-links">
         <div className="footer-links-column">
           <h3>Explore</h3>
@@ -35,7 +34,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Seção de Redes Sociais */}
       <div className="footer-social">
         <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
           <FaFacebookF />
@@ -51,7 +49,6 @@ export default function Footer() {
         </a>
       </div>
 
-      {/* Copyright */}
       <div className="footer-bottom">
         <p>&copy; 2024 FashionB. Todos os direitos reservados.</p>
       </div>

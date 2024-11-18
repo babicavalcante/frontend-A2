@@ -1,7 +1,5 @@
-/* login.css */
-
 body {
-    background-color: #fce4ec; /* Rosa bebê */
+    background-color: #fce4ec; 
     font-family: 'Arial', sans-serif;
   }
   
@@ -22,7 +20,7 @@ body {
   }
   
   .login-box h2 {
-    color: #d81b60; /* Rosa forte */
+    color: #d81b60; 
     text-align: center;
     margin-bottom: 20px;
   }

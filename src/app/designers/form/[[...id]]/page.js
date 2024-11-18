@@ -14,10 +14,10 @@ import { v4 } from "uuid";
 
 export default function Page() {
     const route = useRouter();
-    const params = useParams(); // Descompacta params usando useParams()
+    const params = useParams(); 
 
     const [designer, setDesigner] = useState({ nome: '', especialidade: '', email: '', telefone: '', descricao: '', foto: '' });
-    const [foto, setFoto] = useState(null); // Estado para armazenar a foto carregada
+    const [foto, setFoto] = useState(null); 
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -25,28 +25,26 @@ export default function Page() {
             const dados = designers.find(item => item.id == params.id);
             setDesigner(dados || { nome: '', email: '', telefone: '', descricao: '', foto: '' });
             if (dados?.foto) {
-                setFoto(dados.foto); // Carrega a foto existente, se houver
+                setFoto(dados.foto); 
             }
         }
     }, [params.id]);
 
-    // Função para salvar as alterações feitas no designer
     function salvar(dados) {
         const designers = JSON.parse(localStorage.getItem('designers')) || [];
 
         if (designer.id) {
-            // Encontrando o índice do designer para atualizar
             const index = designers.findIndex(item => item.id === designer.id);
             if (index !== -1) {
-                designers[index] = { ...designers[index], ...dados }; // Atualiza o designer no array
+                designers[index] = { ...designers[index], ...dados }; 
             }
         } else {
-            dados.id = v4(); // Se for novo designer, gera um ID
+            dados.id = v4(); 
             designers.push(dados);
         }
 
         localStorage.setItem('designers', JSON.stringify(designers));
-        return route.push('/designers'); // Redireciona para a página de designers após salvar
+        return route.push('/designers'); 
     }
 
     // Função para lidar com o upload da foto
@@ -55,10 +53,10 @@ export default function Page() {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setFoto(reader.result); // Define a foto como a URL da imagem
+                setFoto(reader.result); 
                 setDesigner(prevState => ({ ...prevState, foto: reader.result }));
             };
-            reader.readAsDataURL(file); // Lê a imagem como URL (base64)
+            reader.readAsDataURL(file); 
         }
     };
 
@@ -69,7 +67,7 @@ export default function Page() {
                 initialValues={designer}
                 enableReinitialize
                 validationSchema={DesignerValidator}
-                onSubmit={values => salvar(values)} // Chama a função de salvar
+                onSubmit={values => salvar(values)} 
             >
                 {({
                     values,
@@ -150,7 +148,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.foto}</div>
                             </Form.Group>
 
-                            {/* Se houver uma imagem carregada, exibe ela */}
                             {foto && (
                                 <div className="mb-3">
                                     <img src={foto} alt="Foto do Designer" style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' }} />

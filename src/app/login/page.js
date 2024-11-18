@@ -6,7 +6,7 @@ import { Button, Form } from "react-bootstrap";
 import Link from "next/link";
 import { FaSignInAlt } from "react-icons/fa";
 import ReCAPTCHA from "react-google-recaptcha";
-import './login.css';  // Importando o CSS
+import './login.css';  
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -15,7 +15,6 @@ export default function LoginPage() {
   const [error, setError] = useState(null);
   const router = useRouter();
 
-  // Função para tratar o envio do formulário
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -27,7 +26,7 @@ export default function LoginPage() {
     // Simulando um processo de autenticação (Você pode integrar com uma API de login real)
     if (email === "babi@gmail.com" && password === "123456") {
       localStorage.setItem("user", JSON.stringify({ email, password }));
-      router.push("/fashionb");  // Redireciona para a página fashionb após o login bem-sucedido
+      router.push("/fashionb");  
     } else {
       setError("Credenciais inválidas. Tente novamente.");
     }
@@ -69,7 +68,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Mensagem de erro */}
           {error && <p className="error-message">{error}</p>}
 
           <Button variant="primary" type="submit" className="w-100 mt-3">

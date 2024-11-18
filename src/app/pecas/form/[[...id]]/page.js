@@ -1,7 +1,7 @@
 'use client';
 
 import Pagina from "@/app/components/Pagina/Pagina";
-import RoupaValidator from "@/app/validators/RoupaValidator"; // Importa o validador de roupas
+import RoupaValidator from "@/app/validators/RoupaValidator"; 
 import { Formik } from "formik";
 import Link from "next/link";
 import { useParams, useRouter } from 'next/navigation';
@@ -14,7 +14,7 @@ import { v4 } from "uuid";
 
 export default function Page() {
     const route = useRouter();
-    const params = useParams(); // Obtém o id da peça pela URL
+    const params = useParams(); 
 
     const [peca, setPeca] = useState({
         nome: '',
@@ -26,63 +26,58 @@ export default function Page() {
         foto: '',
         descricao: ''
     });
-    const [marcas, setMarcas] = useState([]); // Estado para armazenar as marcas
+    const [marcas, setMarcas] = useState([]); 
 
-    // Lista de categorias, agora com a categoria "Bolsa"
     const categorias = ["Roupas", "Sapatos", "Acessórios", "Bolsa"];
     
-    // Tamanhos de roupas e numeração de sapato
     const tamanhosRoupas = ["PP", "P", "M", "G", "GG"];
     const numeracaoSapatos = ["33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43"];
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const pecas = JSON.parse(localStorage.getItem('pecas')) || [];
-            const dados = pecas.find(item => item.id == params.id); // Procura pela peça com o id correspondente
+            const dados = pecas.find(item => item.id == params.id); 
             setPeca(dados || { nome: '', marcas: '', categoria: '', tamanho: '', cor: '', preco: '', foto: '' });
 
-            const marcas = JSON.parse(localStorage.getItem('marcas')) || []; // Carrega as marcas do localStorage
+            const marcas = JSON.parse(localStorage.getItem('marcas')) || []; 
             setMarcas(marcas);
         }
     }, [params.id]);
 
-    // Função para salvar as alterações feitas na peça
+    
     function salvar(dados) {
         const pecas = JSON.parse(localStorage.getItem('pecas')) || [];
 
         if (peca.id) {
-            // Atualiza o item na posição correta sem alterar a ordem
             const index = pecas.findIndex(item => item.id === peca.id);
             if (index !== -1) {
                 pecas[index] = { ...pecas[index], ...dados };
             }
         } else {
-            dados.id = v4(); // Se for uma nova peça, cria um id
+            dados.id = v4(); 
             pecas.push(dados);
         }
 
         localStorage.setItem('pecas', JSON.stringify(pecas));
-        return route.push('/pecas'); // Redireciona para a página de peças após salvar
+        return route.push('/pecas'); 
     }
 
-    // Função para formatar o preço
     const formatarPreco = (preco) => {
         return preco
             .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ".") // Adiciona pontos a cada 3 dígitos
-            .replace(",", "."); // Garante a vírgula como separador de decimal
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ".") 
+            .replace(",", "."); 
     };
 
-    // Função para tratar o upload da foto
+    // upload da foto
     const handleFileChange = (e, setFieldValue) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                // Armazena a imagem como uma URL base64
                 setFieldValue('foto', reader.result);
             };
-            reader.readAsDataURL(file); // Lê o arquivo como URL base64
+            reader.readAsDataURL(file); 
         }
     };
 
@@ -90,10 +85,10 @@ export default function Page() {
         <Pagina titulo="Peças de Roupa">
 
             <Formik
-                initialValues={peca} // Passa os dados da peça para o Formik
-                validationSchema={RoupaValidator} // Validação utilizando o schema do Yup
-                enableReinitialize // Permite que os valores sejam atualizados sempre que o estado mudar
-                onSubmit={values => salvar(values)} // Chama a função de salvar
+                initialValues={peca} 
+                validationSchema={RoupaValidator} 
+                enableReinitialize 
+                onSubmit={values => salvar(values)} 
             >
                 {({
                     values,
@@ -103,7 +98,7 @@ export default function Page() {
                     setFieldValue,
                 }) => {
 
-                    // Formatação do valor de preço no campo
+                    // preço no campo
                     useEffect(() => {
                         if (typeof values.preco === 'number') {
                             const precoNumerico = values.preco.toString();
@@ -114,7 +109,6 @@ export default function Page() {
                     return (
                         <Form className="p-4 shadow-sm rounded" style={{ backgroundColor: '#f8f9fa' }}>
 
-                            {/* Campo Nome */}
                             <Form.Group className="mb-3" controlId="nome">
                                 <Form.Label>Nome</Form.Label>
                                 <Form.Control
@@ -130,7 +124,6 @@ export default function Page() {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Marca */}
                             <Form.Group className="mb-3" controlId="marcas">
                                 <Form.Label>Marca</Form.Label>
                                 <Form.Select
@@ -149,7 +142,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.marcas}</div>
                             </Form.Group>
 
-                            {/* Categoria */}
                             <Form.Group className="mb-3" controlId="categoria">
                                 <Form.Label>Categoria</Form.Label>
                                 <Form.Select
@@ -168,7 +160,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.categoria}</div>
                             </Form.Group>
 
-                            {/* Tamanho */}
                             <Form.Group className="mb-3" controlId="tamanho">
                                 <Form.Label>Tamanho</Form.Label>
                                 <Form.Select
@@ -194,7 +185,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.tamanho}</div>
                             </Form.Group>
 
-                            {/* Cor */}
                             <Form.Group className="mb-3" controlId="cor">
                                 <Form.Label>Cor</Form.Label>
                                 <Form.Control
@@ -210,7 +200,6 @@ export default function Page() {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Preço */}
                             <Form.Group className="mb-3" controlId="preco">
                                 <Form.Label>Preço</Form.Label>
                                 <Form.Control
@@ -218,12 +207,11 @@ export default function Page() {
                                     name="preco"
                                     value={values.preco ? `R$ ${formatarPreco(values.preco)}` : 'R$ 0,00'}
                                     onChange={e => {
-                                        let rawValue = e.target.value.replace(/[^\d,]/g, ''); // Remove qualquer coisa que não seja número ou vírgula
-                                        // Se houver vírgula, substitua por ponto para manipulação de valores numéricos
+                                        let rawValue = e.target.value.replace(/[^\d,]/g, ''); 
                                         if (rawValue.includes(',')) {
                                             rawValue = rawValue.replace(',', '.');
                                         }
-                                        const numericValue = rawValue ? parseFloat(rawValue) : 0;  // Garantir que seja um número, mesmo que 0
+                                        const numericValue = rawValue ? parseFloat(rawValue) : 0;  
                                         setFieldValue('preco', numericValue);
                                     }}
                                     isInvalid={errors.preco}
@@ -244,7 +232,6 @@ export default function Page() {
                                 <div className="text-danger">{errors.descricao}</div>
                             </Form.Group>
 
-                            {/* Foto (Upload ou URL) */}
                             <Form.Group className="mb-3" controlId="foto">
                                 <Form.Label>Foto (URL ou Upload)</Form.Label>
                                 <Form.Control
@@ -252,11 +239,10 @@ export default function Page() {
                                     onChange={(e) => handleFileChange(e, setFieldValue)}
                                     isInvalid={errors.foto}
                                 />
-                                {values.foto && <div><img src={values.foto} alt="Preview" style={{ maxWidth: '100px', marginTop: '10px' }} /></div>} {/* Exibe a foto em preview */}
+                                {values.foto && <div><img src={values.foto} alt="Preview" style={{ maxWidth: '100px', marginTop: '10px' }} /></div>} 
                                 <div className="text-danger">{errors.foto}</div>
                             </Form.Group>
 
-                            {/* Botões */}
                             <div className="text-center">
                                 <Button onClick={handleSubmit} variant="success" className="me-2">
                                     <FaCheck /> Salvar

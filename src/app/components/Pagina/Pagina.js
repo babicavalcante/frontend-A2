@@ -1,23 +1,21 @@
 'use client';
 
 import { Container, Nav, NavDropdown, Navbar, Form, FormControl, Button, Dropdown } from "react-bootstrap";
-import { FaSearch, FaUser, FaShoppingCart, FaHeart, FaGlobe, FaMoon, FaSun } from "react-icons/fa"; // Ícones de modo noturno
-import Link from "next/link"; // Importando o Link do Next.js
+import { FaSearch, FaUser, FaShoppingCart, FaHeart, FaGlobe, FaMoon, FaSun } from "react-icons/fa"; 
+import Link from "next/link"; 
 import { useState, useEffect } from "react";
-import './Pagina.css'; // Certifique-se de que seu CSS está sendo carregado corretamente.
+import './Pagina.css'; 
 import Footer from "../Footer/Footer";
 
 export default function Pagina(props) {
-    const [language, setLanguage] = useState('pt'); // Estado para armazenar o idioma atual
-    const [isNightMode, setIsNightMode] = useState(false); // Estado para controle do modo noturno
+    const [language, setLanguage] = useState('pt'); 
+    const [isNightMode, setIsNightMode] = useState(false); // controle do modo noturno
 
-    // Função para alterar o idioma e salvar no localStorage
     const handleLanguageChange = (lang) => {
         setLanguage(lang);
-        localStorage.setItem('language', lang); // Armazenando a preferência de idioma
+        localStorage.setItem('language', lang); 
     };
 
-    // Carregar idioma e modo salvo no localStorage, caso existam
     useEffect(() => {
         const savedLanguage = localStorage.getItem('language');
         const savedMode = localStorage.getItem('isNightMode') === 'true'; // Verificar se está no modo noturno
@@ -34,7 +32,7 @@ export default function Pagina(props) {
     const toggleNightMode = () => {
         setIsNightMode(prevMode => {
             const newMode = !prevMode;
-            localStorage.setItem('isNightMode', newMode); // Salvar no localStorage
+            localStorage.setItem('isNightMode', newMode);
             if (newMode) {
                 document.body.classList.add('night-mode');
             } else {
@@ -48,7 +46,6 @@ export default function Pagina(props) {
         <>
             <Navbar expand="lg" className="navbar-custom">
                 <Container>
-                    {/* Logo FashionB com link direto */}
                     <Navbar.Brand href="/fashionb" className="navbar-logo">
                         FashionB
                     </Navbar.Brand>
@@ -78,9 +75,7 @@ export default function Pagina(props) {
                             </Button>
                         </Form>
 
-                        {/* Ícones de Navegação (Login, Carrinho, Favoritos) */}
                         <Nav>
-                            {/* Redirecionamento para Login */}
                             <Nav.Link as={Link} href="/login">
                                 <FaUser className="nav-icon" />
                             </Nav.Link>
@@ -88,11 +83,11 @@ export default function Pagina(props) {
                                 <FaHeart className="nav-icon" />
                             </Nav.Link>
 
-                            {/* Seletor de Idioma */}
+                            {/* Idioma */}
                             <Nav.Link className="navbar-nav-item">
                                 <Dropdown>
                                     <Dropdown.Toggle variant="link" id="dropdown-language" className="nav-link">
-                                        <FaGlobe className="nav-icon" /> {/* Ícone de Globo */}
+                                        <FaGlobe className="nav-icon" /> 
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={() => handleLanguageChange('pt')}>
@@ -108,26 +103,22 @@ export default function Pagina(props) {
                                 </Dropdown>
                             </Nav.Link>
 
-                            {/* Ícone de Modo Noturno */}
                             <Nav.Link onClick={toggleNightMode} className="nav-icon">
-                                {isNightMode ? <FaSun /> : <FaMoon />} {/* Exibe o ícone correspondente */}
+                                {isNightMode ? <FaSun /> : <FaMoon />} 
                             </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
 
-            {/* Cabeçalho com título */}
             <div className="page-header">
                 <h1>{props.titulo}</h1>
             </div>
 
-            {/* Container para conteúdo principal */}
             <Container className="content-container">
                 {props.children}
             </Container>
-
-            {/* Incluindo o Footer ao final da página */}
+            
             <Footer />
         </>
     );

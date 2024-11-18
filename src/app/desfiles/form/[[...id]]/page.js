@@ -22,7 +22,7 @@ export default function Page({ params }) {
 
     const [marcas, setMarcas] = useState([]);
     const [designers, setDesigners] = useState([]);
-    const [cartaz, setCartaz] = useState(null); // Estado para armazenar a imagem do cartaz
+    const [cartaz, setCartaz] = useState(null); 
 
     useEffect(() => {
         setMarcas(JSON.parse(localStorage.getItem('marcas')) || []);
@@ -30,7 +30,6 @@ export default function Page({ params }) {
     }, []);
 
     function salvar(dados) {
-        // Se o cartaz foi alterado, salva a imagem
         if (cartaz) {
             dados.cartaz = cartaz;
         }
@@ -46,15 +45,15 @@ export default function Page({ params }) {
         return route.push('/desfiles');
     }
 
-    // Função para lidar com o upload da imagem
+    // upload da imagem
     const handleCartazChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setCartaz(reader.result); // Define o cartaz como a URL da imagem
+                setCartaz(reader.result); 
             };
-            reader.readAsDataURL(file); // Lê a imagem como URL
+            reader.readAsDataURL(file); 
         }
     };
 
@@ -73,7 +72,6 @@ export default function Page({ params }) {
                     setFieldValue,
                 }) => {
 
-                    // Mascara para o campo de horário (exemplo: HH:MM)
                     useEffect(() => {
                         setFieldValue('horario', mask(values.horario, '99:99'));
                     }, [values.horario]);
@@ -181,7 +179,6 @@ export default function Page({ params }) {
                                 <div className="text-danger">{errors.cartaz}</div>
                             </Form.Group> 
 
-                            {/* Se houver uma imagem carregada, exibe ela */}
                             {cartaz && (
                                 <div className="mb-3">
                                     <img src={cartaz} alt="Cartaz" style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' }} />

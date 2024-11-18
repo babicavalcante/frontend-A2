@@ -27,7 +27,10 @@ const DesfileValidator = Yup.object().shape({
       return new Date(value) > today;
     }),
 
-  descricao: Yup.string().required('A descrição é obrigatória.')
+  descricao: Yup.string()
+  .required('A descrição é obrigatória.')
+  .min(10, 'A descrição deve ter pelo menos 10 caracteres.')
+  .max(500, 'A descrição não pode ter mais de 500 caracteres.'),
 });
 
 export default DesfileValidator;

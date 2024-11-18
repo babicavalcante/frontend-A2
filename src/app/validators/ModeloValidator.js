@@ -9,7 +9,7 @@ const ModeloValidator = Yup.object().shape({
         .required('A altura é obrigatória.')
         .min(160, 'A altura mínima deve ser 160 cm.')
         .max(210, 'A altura máxima deve ser 210 cm.')
-        .typeError('A altura deve ser um número válido.'), // Para garantir que seja um número
+        .typeError('A altura deve ser um número válido.'), 
 
     idade: Yup.number()
         .required('A idade é obrigatória.')
@@ -19,18 +19,14 @@ const ModeloValidator = Yup.object().shape({
 
     telefone: Yup.string()
         .required('O telefone é obrigatório.')
-        .matches(
-            /\(\d{2}\) \d{5}-\d{4}/,
-            'O telefone deve seguir o formato (XX) XXXXX-XXXX.'
-        ),
+        .matches(/^\(\d{2}\) \d{5}-\d{4}$/, 'Telefone deve estar no formato (99) 99999-9999'),
 
     email: Yup.string()
         .required('O e-mail é obrigatório.')
         .email('O e-mail deve ser válido.'),
 
     peca: Yup.string()
-        .required('A peça de roupa é obrigatória.')
-        .min(3, 'A peça de roupa deve ter pelo menos 3 caracteres.'),
+        .required('A peça de roupa é obrigatória.'),
 
     foto: Yup.mixed()
         .required('A foto é obrigatória.')

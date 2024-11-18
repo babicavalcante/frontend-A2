@@ -1,6 +1,5 @@
-/* Navbar customizada */
 .navbar-custom {
-  background-color: #f7c1d6 !important; /* Rosa bebê */
+  background-color: #f7c1d6 !important; 
   border-bottom: 2px solid #e5a8b8 !important;
   font-family: 'Helvetica', sans-serif;
 }
@@ -16,24 +15,24 @@
   color: #e5a8b8;
 }
 
-/* Alinhar os ícones da navbar e torná-los maiores */
+/* ícones da navbar */
 .navbar-nav .nav-link {
   display: flex;
   align-items: center;
-  margin-right: 15px; /* Espaçamento entre os ícones */
+  margin-right: 15px; 
 }
 
 .navbar-nav .nav-link .nav-icon {
-  font-size: 1.2rem; /* Tamanho maior para os ícones */
-  color: #333; /* Cor original dos ícones */
+  font-size: 1.2rem; 
+  color: #333;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 /* Ícone de Lua/Sol */
 .navbar-nav .nav-link.night-mode-toggle .nav-icon {
-  font-size: 1.8rem; /* Tamanho igual aos outros ícones */
-  color: #333; /* Cor original do ícone */
+  font-size: 1.8rem; 
+  color: #333; 
 }
 
 /* Quando passar o mouse sobre qualquer ícone */
@@ -41,7 +40,7 @@
   color: #e5a8b8;
 }
 
-/* Estilo dos itens do dropdown de idioma */
+
 #dropdown-language .dropdown-menu {
   min-width: 150px;
   padding: 10px 0;
@@ -103,7 +102,7 @@
   }
 }
 
-/* Modo Escuro (ativado por .night-mode) */
+/* Modo Escuro */
 body.night-mode {
   background-color: #121212;
   color: #696969;

@@ -1,24 +1,21 @@
-/* Footer.css */
-
-/* Estilo do Footer */
 .footer {
-    background-color: #dbadbe; /* Rosa bebê */
+    background-color: #dbadbe; 
     color: #302f2f;
-    padding: 50px 0; /* Padding para espaçamento */
+    padding: 50px 0; 
     font-family: 'Helvetica', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-top: 50px; /* Espaço entre o conteúdo e o rodapé */
-    border-top: 3px solid #e5a8b8; /* Borda superior para o footer */
+    margin-top: 50px; 
+    border-top: 3px solid #e5a8b8; 
   }
   
   /* Links do Footer */
   .footer-links {
     display: flex;
-    justify-content: space-between; /* Espaço entre as colunas */
+    justify-content: space-between; 
     width: 80%;
     max-width: 1100px;
     margin-bottom: 40px;
@@ -34,7 +31,7 @@
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 15px;
-    color: #333; /* Título das seções com a cor padrão */
+    color: #333; 
   }
   
   .footer-links ul {
@@ -47,14 +44,14 @@
   }
   
   .footer-links a {
-    color: #2e040f; /* Cor rosa clara para os links */
+    color: #2e040f; 
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.3s;
   }
   
   .footer-links a:hover {
-    color: #000000; /* Cor escura no hover */
+    color: #000000; 
   }
   
   /* Seção de Redes Sociais */
@@ -65,20 +62,20 @@
   }
   
   .footer-social a {
-    color: #333; /* Cor escura para os ícones de redes sociais */
+    color: #333; 
     font-size: 1.5rem;
     margin: 0 15px;
     transition: color 0.3s ease;
   }
   
   .footer-social a:hover {
-    color: #e5a8b8; /* Rosa suave no hover */
+    color: #e5a8b8; 
   }
   
   /* Rodapé Inferior */
   .footer-bottom {
     font-size: 0.85rem;
-    color: #555; /* Cor de texto mais suave para a parte inferior */
+    color: #555; 
     margin-top: 20px;
   }
   

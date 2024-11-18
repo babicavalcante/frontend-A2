@@ -3,16 +3,14 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Carousel, Modal, Button } from "react-bootstrap";
 import Pagina from "../components/Pagina/Pagina";
-import './fashionb.css'; // Importando o arquivo de estilos
+import './fashionb.css'; 
 
-// Simulando os dados para "modelos" e "destaques"
 const modelos = [
   { id: 1, nome: "Bella Hadid", foto: "https://i.pinimg.com/236x/65/62/e2/6562e2d47b531e360953687cebe023a0.jpg"},
   { id: 2, nome: "Candice Swanepoell", foto: "https://images.bursadabugun.com/galeriler/2021/12/13/80667-candice-swanepoel-miami-sahillerinde-boy-gosterdi-61b701dd0f523.jpg"},
   { id: 3, nome: "Adriana Lima", foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiWO0zQNhqLt3DB_aTKrhyXK7_Ts55vxouyA&s"},
 ];
 
-// Lista de imagens de destaque
 const destaques = [
   {
     id: 1,
@@ -40,7 +38,6 @@ export default function FashionB() {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  // Carregar os dados de cada categoria do localStorage
   useEffect(() => {
     const dadosDesigners = JSON.parse(localStorage.getItem('designers')) || [];
     setDesigners(dadosDesigners);
@@ -55,13 +52,12 @@ export default function FashionB() {
     setDesfiles(dadosDesfiles);
   }, []);
 
-  // Função para abrir o modal com o conteúdo
+  // abrir o modal com o conteúdo
   const openModal = (content) => {
     setModalContent(content);
     setShowModal(true);
   };
 
-  // Função para fechar o modal
   const closeModal = () => {
     setShowModal(false);
     setModalContent(null);
@@ -70,7 +66,6 @@ export default function FashionB() {
   return (
     <Pagina>
       <Container>
-        {/* Carousel de Destaques */}
         <Carousel interval={5000} fade={true}>
           {destaques.map((destaque) => (
             <Carousel.Item key={destaque.id}>
@@ -78,9 +73,9 @@ export default function FashionB() {
                 className="d-block w-100 destaque-img"
                 src={destaque.foto}
                 alt={destaque.nome}
-                loading="lazy" // Para melhorar a performance de carregamento
-                onClick={() => openModal(destaque)} // Abre o modal ao clicar na imagem
-                style={{ cursor: 'pointer' }} // Para indicar que é interativo
+                loading="lazy" 
+                onClick={() => openModal(destaque)} 
+                style={{ cursor: 'pointer' }} 
               />
               <Carousel.Caption className="destaque-caption">
                 <h3>{destaque.nome}</h3>
@@ -90,7 +85,6 @@ export default function FashionB() {
           ))}
         </Carousel>
 
-        {/* Exibindo os Modelos */}
         <h2 className="mt-5">Modelos em Destaque</h2>
         <p>Conheça os rostos que estão dominando as passarelas e deixando sua marca no mundo da moda. Cada um com uma história única e um estilo que inspira.</p>
         <Row>
@@ -124,7 +118,6 @@ export default function FashionB() {
           ))}
         </Row>
 
-        {/* Exibindo as Marcas */}
         <h2 className="mt-5">Marcas</h2>
         <p>Com designs que refletem inovação, qualidade e estilo, essas marcas estão na vanguarda da moda mundial.</p>
         <Row>
@@ -140,7 +133,6 @@ export default function FashionB() {
           ))}
         </Row>
 
-        {/* Exibindo as Peças */}
         <h2 className="mt-5">Peças</h2>
         <p>Descubra as peças mais icônicas da temporada. Roupas que combinam com qualquer estilo e ambiente, trazendo o melhor da moda para o seu guarda-roupa.</p>
         <Row>
@@ -157,7 +149,6 @@ export default function FashionB() {
           ))}
         </Row>
 
-        {/* Exibindo os Designers */}
         <h2 className="mt-5">Designers</h2>
         <p>Os visionários por trás das coleções mais inovadoras da indústria da moda. Conheça os criadores que estão moldando o futuro da alta-costura.</p>
         <Row>
@@ -182,7 +173,6 @@ export default function FashionB() {
             {modalContent?.foto && <img src={modalContent.foto} alt={modalContent.nome} className="w-100" />}
             <p>{modalContent?.descricao}</p>
 
-            {/* Exibir informações adicionais com base no tipo de item */}
             {modalContent?.altura && <p><strong>Altura:</strong> {modalContent.altura}</p>}
             {modalContent?.peso && <p><strong>Peso:</strong> {modalContent.peso}</p>}
             {modalContent?.idade && <p><strong>Idade:</strong> {modalContent.idade}</p>}
