@@ -1,0 +1,114 @@
+/* Estilos gerais para o corpo da página */
+body {
+    background-color: #fce4ec;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Contêiner principal da página de cadastro */
+  .conta-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fce4ec;
+  }
+  
+  /* Caixa de cadastro */
+  .conta-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* Título da caixa de cadastro */
+  .conta-box h2 {
+    color: #d81b60;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para os campos de entrada */
+  .form-control {
+    border-radius: 4px;
+    border: 1px solid #e1bee7;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+  
+  /* Foco nos campos de entrada */
+  .form-control:focus {
+    border-color: #f06292;
+    box-shadow: 0 0 5px rgba(240, 98, 146, 0.5);
+  }
+  
+  /* Estilo para a mensagem de erro */
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    text-align: left;
+  }
+  
+  /* Botão de enviar (criar conta) */
+  .btn-primary {
+    background-color: #f06292;
+    border-color: #f06292;
+    padding: 10px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  /* Hover no botão */
+  .btn-primary:hover {
+    background-color: #e91e63;
+    border-color: #e91e63;
+  }
+  
+  /* Estilo para o link de login */
+  .text-muted {
+    color: #d81b60;
+    text-decoration: none;
+  }
+  
+  .text-muted:hover {
+    text-decoration: underline;
+  }
+  
+  .text-center {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .password-field {
+    position: relative;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #d81b60;
+  }
+  
+  .eye-icon:hover {
+    color: #e91e63;
+  }
+  
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .conta-box {
+      padding: 20px;
+    }
+  }
+  
