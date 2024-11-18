@@ -5,16 +5,10 @@ import { Container, Row, Col, Card, Carousel, Modal, Button } from "react-bootst
 import Pagina from "../components/Pagina/Pagina";
 import './fashionb.css';
 
-const modelos = [
-  { id: 1, nome: "Bella Hadid", foto: "https://i.pinimg.com/236x/65/62/e2/6562e2d47b531e360953687cebe023a0.jpg" },
-  { id: 2, nome: "Candice Swanepoell", foto: "https://images.bursadabugun.com/galeriler/2021/12/13/80667-candice-swanepoel-miami-sahillerinde-boy-gosterdi-61b701dd0f523.jpg" },
-  { id: 3, nome: "Adriana Lima", foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiWO0zQNhqLt3DB_aTKrhyXK7_Ts55vxouyA&s" },
-];
-
 const destaques = [
   {
     id: 1,
-    nome: "YSL Summer 2024",
+    nome: "YSL summer 2024",
     foto: "https://s2-marieclaire.glbimg.com/U7vGrmSkta-Rl9Lnsnsh99EDeGI=/0x0:1172x659/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_51f0194726ca4cae994c33379977582d/internal_photos/bs/2024/r/z/nNggWJSe6uknsSerRemA/saint.jpg",
   },
   {
@@ -34,6 +28,7 @@ export default function FashionB() {
   const [marcas, setMarcas] = useState([]);
   const [pecas, setPecas] = useState([]);
   const [desfiles, setDesfiles] = useState([]);
+  const [modelos, setModelos] = useState([]); 
 
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -50,9 +45,12 @@ export default function FashionB() {
 
     const dadosDesfiles = JSON.parse(localStorage.getItem('desfiles')) || [];
     setDesfiles(dadosDesfiles);
+
+    const dadosModelos = JSON.parse(localStorage.getItem('modelos')) || [];
+    setModelos(dadosModelos);
+
   }, []);
 
-  // abrir o modal com o conteúdo
   const openModal = (content) => {
     setModalContent(content);
     setShowModal(true);
@@ -85,9 +83,7 @@ export default function FashionB() {
           ))}
         </Carousel>
 
-        {/* Display other sections */}
-        {/* Modelos */}
-        <h2 className="mt-5">Modelos em Destaque</h2>
+        <h2 className="mt-5">Modelos</h2>
         <Row>
           {modelos.map((modelo) => (
             <Col md={4} key={modelo.id}>
@@ -101,7 +97,6 @@ export default function FashionB() {
           ))}
         </Row>
 
-        {/* Designers */}
         <h2 className="mt-5">Designers</h2>
         <Row>
           {designers.map((designer) => (
@@ -116,7 +111,6 @@ export default function FashionB() {
           ))}
         </Row>
 
-        {/* Marcas */}
         <h2 className="mt-5">Marcas</h2>
         <Row>
           {marcas.map((marca) => (
@@ -131,7 +125,6 @@ export default function FashionB() {
           ))}
         </Row>
 
-        {/* Peças */}
         <h2 className="mt-5">Peças</h2>
         <Row>
           {pecas.map((peca) => (
@@ -140,6 +133,21 @@ export default function FashionB() {
                 <Card.Img variant="top" src={peca.foto || "/img/default.jpg"} onClick={() => openModal(peca)} style={{ cursor: 'pointer' }} />
                 <Card.Body>
                   <Card.Title>{peca.nome}</Card.Title>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        <h2 className="mt-5">Desfiles</h2>
+        <Row className="gy-4">
+          {desfiles.map((desfile) => (
+            <Col md={4} key={desfile.id}>
+              <Card>
+                <Card.Img variant="top" src={desfile.foto || "/img/default.jpg"} onClick={() => openModal(desfile)} style={{ cursor: 'pointer' }} />
+                <Card.Body>
+                  <Card.Title>{desfile.nome}</Card.Title>
+                  <Card.Text>{desfile.descricao}</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -166,10 +174,10 @@ export default function FashionB() {
             {modalContent?.pais_origem && <p><strong>País de Origem:</strong> {modalContent.pais_origem}</p>}
 
             {/* Peças */}
-            {modalContent?.preco && <p><strong>Preço:</strong> R${modalContent.preco}</p>}
             {modalContent?.categoria && <p><strong>Categoria:</strong> {modalContent.categoria}</p>}
             {modalContent?.tamanho && <p><strong>Tamanho:</strong> {modalContent.tamanho}</p>}
             {modalContent?.cor && <p><strong>Cor:</strong> {modalContent.cor}</p>}
+            {modalContent?.preco && <p><strong>Preço:</strong> R${modalContent.preco}</p>}
 
             {/* Modelos */}
             {modalContent?.altura && <p><strong>Altura:</strong> {modalContent.altura}</p>}
