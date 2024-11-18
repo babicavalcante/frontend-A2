@@ -5,32 +5,27 @@ import { useRouter } from "next/navigation";
 import { Button, Form } from "react-bootstrap";
 import Link from "next/link";
 import { FaSignInAlt } from "react-icons/fa";
-import ReCAPTCHA from "react-google-recaptcha"; // Importando o reCAPTCHA
+import ReCAPTCHA from "react-google-recaptcha"; 
 import './login.css';  
 
 export default function LoginPage() {
-  const [email, setEmail] = useState(""); // Estado para o email
-  const [password, setPassword] = useState(""); // Estado para a senha
-  const [recaptchaValue, setRecaptchaValue] = useState(null); // Estado para armazenar a resposta do reCAPTCHA
-  const [error, setError] = useState(null); // Estado para mensagens de erro
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const [recaptchaValue, setRecaptchaValue] = useState(null); 
+  const [error, setError] = useState(null); 
   const router = useRouter();
 
-  // Função de login
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Verificando se o reCAPTCHA foi preenchido
     if (!recaptchaValue) {
       setError("Por favor, complete o reCAPTCHA.");
       return;
     }
 
-    // Recupera as credenciais salvas no localStorage
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    // Verifica se as credenciais do usuário estão corretas
     if (storedUser && email === storedUser.email && password === storedUser.password) {
-      // Se as credenciais forem válidas, redireciona para a página principal
       router.push("/fashionb");
     } else {
       setError("Credenciais inválidas. Tente novamente.");
@@ -49,7 +44,7 @@ export default function LoginPage() {
               type="email"
               placeholder="Digite seu email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} // Atualiza o email
+              onChange={(e) => setEmail(e.target.value)} 
               required
             />
           </Form.Group>
@@ -60,7 +55,7 @@ export default function LoginPage() {
               type="password"
               placeholder="Digite sua senha"
               value={password}
-              onChange={(e) => setPassword(e.target.value)} // Atualiza a senha
+              onChange={(e) => setPassword(e.target.value)} 
               required
             />
           </Form.Group>
@@ -68,12 +63,11 @@ export default function LoginPage() {
           {/* reCAPTCHA */}
           <div className="recaptcha-container">
             <ReCAPTCHA
-              sitekey="6Lfujn0qAAAAAGNJ6rzoTXX7ZNYbMD9aYBvDsvLT" // Substitua pela sua chave pública do reCAPTCHA
-              onChange={(value) => setRecaptchaValue(value)} // Armazena o valor do reCAPTCHA
+              sitekey="6Lfujn0qAAAAAGNJ6rzoTXX7ZNYbMD9aYBvDsvLT" 
+              onChange={(value) => setRecaptchaValue(value)} 
             />
           </div>
 
-          {/* Exibe a mensagem de erro se houver */}
           {error && <p className="error-message">{error}</p>}
 
           <Button variant="primary" type="submit" className="w-100 mt-3">
@@ -81,7 +75,6 @@ export default function LoginPage() {
           </Button>
         </Form>
 
-        {/* Lembrete de cadastro e link para "Esqueceu sua senha?" */}
         <div className="text-center mt-3">
           <p className="login-info">
             Não tem uma conta? <Link href="/conta" className="text-muted">Cadastre-se</Link>

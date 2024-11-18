@@ -6,18 +6,17 @@ import { Button, Form } from "react-bootstrap";
 import Link from "next/link";
 import { FaEye, FaEyeSlash, FaUserPlus } from "react-icons/fa";
 import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
-import { mask } from 'remask'; // Corrigindo a importação de 'remask'
-import { ContaValidator } from "../validators/ContaValidator"; // Importando o validador
+import { mask } from 'remask'; 
+import { ContaValidator } from "../validators/ContaValidator"; 
 import './conta.css';
 
 export default function ContaPage() {
   const router = useRouter();
 
-  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/esconder senha
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Estado para confirmar a senha
+  const [showPassword, setShowPassword] = useState(false); 
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
 
   const handleConta = (values) => {
-    // Salvar as informações no localStorage
     const newUser = {
       nome: values.nome,
       sobrenome: values.sobrenome,
@@ -27,13 +26,11 @@ export default function ContaPage() {
       password: values.password
     };
 
-    localStorage.setItem("user", JSON.stringify(newUser)); // Salva o usuário no localStorage
+    localStorage.setItem("user", JSON.stringify(newUser)); 
 
-    // Redirecionar para a página de login após o cadastro
     router.push("/login");
   };
 
-  // Função para aplicar a máscara usando a função mask do remask
   const handleMask = (event, maskPattern) => {
     const { value } = event.target;
     event.target.value = mask(value, maskPattern);
@@ -98,7 +95,7 @@ export default function ContaPage() {
                   name="telefone"
                   className="form-control"
                   placeholder="(00) 00000-0000"
-                  onInput={(e) => handleMask(e, '(99) 99999-9999')} // Máscara para o telefone
+                  onInput={(e) => handleMask(e, '(99) 99999-9999')} 
                 />
                 <ErrorMessage name="telefone" component="div" className="error-message" />
               </div>
@@ -109,11 +106,11 @@ export default function ContaPage() {
                   name="cpf"
                   className="form-control"
                   placeholder="000.000.000-00"
-                  onInput={(e) => handleMask(e, '999.999.999-99')} // Máscara para o CPF
+                  onInput={(e) => handleMask(e, '999.999.999-99')} 
                   value={values.cpf}
                   onChange={(e) => {
-                    handleChange(e); // Atualiza o valor de CPF no Formik
-                    e.target.value = mask(e.target.value, '999.999.999-99'); // Aplica a máscara
+                    handleChange(e); 
+                    e.target.value = mask(e.target.value, '999.999.999-99'); 
                   }}
                 />
                 <ErrorMessage name="cpf" component="div" className="error-message" />
@@ -130,7 +127,7 @@ export default function ContaPage() {
                   />
                   <div
                     className="eye-icon"
-                    onClick={() => setShowPassword(!showPassword)} // Toggle para mostrar/esconder
+                    onClick={() => setShowPassword(!showPassword)} 
                   >
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </div>
@@ -149,7 +146,7 @@ export default function ContaPage() {
                   />
                   <div
                     className="eye-icon"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle para mostrar/esconder
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
                   >
                     {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                   </div>

@@ -24,7 +24,7 @@ export const ContaValidator = Yup.object({
     .required('CPF é obrigatório')
 });
 
-// Função de validação de CPF
+// validação de CPF
 const validCPF = (cpf) => {
   if (!cpf || cpf.length !== 11) return false;
   let sum = 0;
