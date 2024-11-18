@@ -19,7 +19,10 @@ export default function Page() {
     const [designer, setDesigner] = useState({ nome: '', especialidade: '', email: '', telefone: '', descricao: '', foto: '' });
     const [foto, setFoto] = useState(null); 
 
+    const [marcas, setMarcas] = useState([]);
+
     useEffect(() => {
+        setMarcas(JSON.parse(localStorage.getItem('marcas')) || []);
         if (typeof window !== 'undefined') {
             const designers = JSON.parse(localStorage.getItem('designers')) || [];
             const dados = designers.find(item => item.id == params.id);
@@ -47,7 +50,7 @@ export default function Page() {
         return route.push('/designers'); 
     }
 
-    // Função para lidar com o upload da foto
+    // upload da foto
     const handleFotoChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -122,6 +125,24 @@ export default function Page() {
                                     isInvalid={errors.telefone}
                                 />
                                 <div className="text-danger">{errors.telefone}</div>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="marca">
+                                <Form.Label>Marca</Form.Label>
+                                <Form.Select
+                                    name="marca"
+                                    value={values.marca}
+                                    onChange={handleChange}
+                                    isInvalid={errors.marca}
+                                >
+                                    <option value=''>Selecione</option>
+                                    {marcas.map(item => (
+                                        <option key={item.nome} value={item.nome}>
+                                            {item.nome}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                                <div className="text-danger">{errors.marca}</div>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="descricao">
